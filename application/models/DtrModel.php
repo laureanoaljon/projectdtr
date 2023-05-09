@@ -10,7 +10,7 @@ class DtrModel extends CI_Model
         $this->load->database();
     }
 
-    public function save_time_in($employee_db_id, $current_time, $current_date){
+    public function save_time_in($employee_db_id, $current_time, $current_date, $type){
         
         // if (isset($employee_db_id) && isset($current_date) && isset($current_time)){
         //     $query = $this->db->query("select * from time_records where (employee_db_id='".$employee_db_id.", date='".$current_date."')");

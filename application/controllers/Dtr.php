@@ -20,16 +20,16 @@ class Dtr extends CI_Controller {
     }
 
 	public function time_in_out(){
-        date_default_timezone_set('Asia/Manila');
-        $type = $this->input->post('type');
-        $current_time = $this->input->post('current_time');
-        $employee_db_id = $_SESSION['user']['db_id'];
+                date_default_timezone_set('Asia/Manila');
+                $type = $this->input->post('type');
+                $current_time = $this->input->post('current_time');
+                $employee_db_id = $_SESSION['user']['db_id'];
 
-        $current_time = date('Y-m-d H:i:s', strtotime($current_time));
-        $current_date = date('Y-m-d H:i:s');
+                $current_time = date('Y-m-d H:i:s', strtotime($current_time));
+                $current_date = date('Y-m-d H:i:s');
 
-        $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type);
+                $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type);
 
-        echo json_encode("Success!");
+                echo json_encode("Success!");
 	}
 }
