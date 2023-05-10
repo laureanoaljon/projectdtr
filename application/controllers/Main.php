@@ -5,11 +5,10 @@ class Main extends CI_Controller {
 
 	function __construct(){
         parent::__construct();
-
-        $this->load->library('form_validation');
-
         $this->load->model('loginmodel');
-
+        $this->load->model('dtrmodel');
+        
+        $this->load->library('form_validation');
         $this->load->helper('html');
         $this->load->helper('url');
         $this->load->helper('date');
@@ -32,25 +31,19 @@ class Main extends CI_Controller {
             $data['last_name'] = $_SESSION['user']['s_name'];
             $data['category'] = $_SESSION['user']['category'];
 
-            // $data['page'] = "main";
-            
-            // $data['header'] = $this->load->view('header', $data, true);
-            // $data['footer'] = $this->load->view('footer', $data, true);
-
-            // $data['count'] = 0;
-
             $data['year'] = date("Y");
             $data['month'] = date("m"); 
             $data['days'] = cal_days_in_month(CAL_GREGORIAN, $data['month'], $data['year']);
 
+            $employee_id = $data['db_id'];
+            $current_date = date("Y-m");
+
+            $data['time_records'] = $this->dtrmodel->get_time_records($employee_id, $current_date);
+            // print_r($data['time_records']);
+
             $this->load->view('dashboard', $data);
         } else {
             $data = array();
-
-            // $data['page'] = "main";
-
-            // $data['header'] = $this->load->view('header', $data, true);
-            // $data['footer'] = $this->load->view('footer', $data, true);
 
             $this->load->view('login', $data);
         }

@@ -20,16 +20,33 @@ class Dtr extends CI_Controller {
     }
 
 	public function time_in_out(){
-                date_default_timezone_set('Asia/Manila');
-                $type = $this->input->post('type');
-                $current_time = $this->input->post('current_time');
-                $employee_db_id = $_SESSION['user']['db_id'];
+        date_default_timezone_set('Asia/Manila');
 
-                $current_time = date('Y-m-d H:i:s', strtotime($current_time));
-                $current_date = date('Y-m-d H:i:s');
+        $type = $this->input->post('type');
+        $current_time = $this->input->post('current_time');
+        $image = $this->input->post('image');
 
-                $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type);
+        $employee_db_id = $_SESSION['user']['db_id'];
 
-                echo json_encode("Success!");
+        $current_time = date('H:i:s', strtotime($current_time));
+        $current_date = date('Y-m-d');
+        $current_time_formatted = date('HiA', strtotime($current_time));
+
+        $image_title = $employee_db_id . '_' . $current_time_formatted;
+
+        $image = str_replace('data:image/png;base64,', '', $image);
+        // $image = str_replace(' ', '+', $image);
+        $data = base64_decode($image);
+        file_put_contents('./assets/'.$image_title.'.png', $data);
+
+        $image_data = base64_encode(file_get_contents('./assets/'.$image_title.'.png'));
+        $src = 'data:image/png;base64,'.$image_data;
+
+        // Pagkuha ng image using path, para masave sa database
+        $imagessss = addslashes(file_get_contents('./assets/'.$image_title.'.png'));
+
+        $result = $this->dtrmodel->save_time_in_out($employee_db_id, date('H:i:s', strtotime('11:55')), $current_date, $type, $imagessss);
+
+        echo json_encode($result);
 	}
 }

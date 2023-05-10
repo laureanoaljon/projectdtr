@@ -16,17 +16,9 @@
     ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2XBB2166Q"></script>
-    <!-- <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-E2XBB2166Q');
-
-    </script> -->
+    
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" integrity="sha512-PIAUVU8u1vAd0Sz1sS1bFE5F1YjGqm/scQJ+VIUJL9kNa8jtAWFUDMu5vynXPDprRRBqHrE8KKEsjA7z22J1FA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" integrity="sha512-xnwMSDv7Nv5JmXb48gKD5ExVOnXAbNpBWVAXTo9BJWRJRygG8nwQI81o5bYe8myc9kiEF/qhMGPjkSsF06hyHA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
       th {
@@ -77,7 +69,7 @@
                       
                     <?php if (isset($employee_id)) { ?>
                       <div class="col-md-6 mt-1 text-right">
-                        <h5 style="font-size: 20px;">Hello, <b><?php echo $first_name; ?></b></h5>
+                        <h5 style="font-size: 20px;">Hello, <b><?php echo $first_name; ?></b> <i class="fa fa-user-circle-o" aria-hidden="true"></i></h5>
                       </div>
                     <?php } ?>
                 </nav>
@@ -125,9 +117,9 @@
                           <button class="btn btn-secondary" type="button" id="printDtrForm">Print DTR Form</button>
                         </div>
 
-                        <div class="col-2">
-											    <button class="btn btn-secondary" type="button" id="timeInBtn">Time In</button>
-                          <button class="btn btn-secondary" type="button" id="timeOutBtn">Time Out</button>
+                        <div class="col-2 text-right">
+											    <button class="btn btn-secondary" type="button" id="timeInBtn" data-type="timeIn" data-title='Time In' data-toggle="modal" data-target="#timeInOutModal">Time In</button>
+                          <button class="btn btn-secondary" type="button" id="timeOutBtn" data-type="timeOut" data-title='Time Out' data-toggle="modal" data-target="#timeInOutModal">Time Out</button>
                         </div>
                     </div>
                   </div>
@@ -156,34 +148,60 @@
                       <tbody>
                         <?php for ($x = 1; $x <= $days; $x++) { ?>
                           <?php $day = date('D', strtotime("{$year}-{$month}-{$x}")); ?>
-                          <?php if ($day == "Sun" || $day == "Sat") {?>
-                            <tr style="background-color: #d3d3d3;">
-                          <?php } else { ?>
-                            <tr>
+                          <?php for ($y = 0; $y < count($time_records); $y++ ) { ?>
+                            <?php if ($x == date('d', strtotime($time_records[$y]['date']))) { ?>
+                              <?php if ($day == "Sun" || $day == "Sat") {?>
+                                <tr style="background-color: #d3d3d3;">
+                              <?php } else { ?>
+                                <tr>
+                              <?php } ?>
+                                  <th scope="row"><?php echo $x; ?></th>
+                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_in'])); ?></td>
+                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_out'])); ?></td>
+                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_in'])); ?></td>
+                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_out'])); ?></td>
+                                  <td style="text-align: center";><?php echo $day; ?></td>
+                                  <td></td>
+                                </tr>
+                            <?php } else { ?>
+                              <?php if ($day == "Sun" || $day == "Sat") { ?>
+                                <tr style="background-color: #d3d3d3;">
+                              <?php } else { ?>
+                                <tr>
+                              <?php } ?>
+                                  <th scope="row"><?php echo $x; ?></th>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td style="text-align: center";><?php echo $day; ?></td>
+                                  <td></td>
+                                </tr>
                           <?php } ?>
-                            <th scope="row"><?php echo $x; ?></th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td style="text-align: center";><?php echo $day; ?></td>
-                            <td></td>
-                          </tr>
+                        <?php } ?>
                         <?php } ?>
                       </tbody>
                     </table>
                   </div>
+
+
+                  <!-- <?php $time = date("H:i:s A", strtotime('16:10')); ?>
+                  <?php $cur_time = date("H:i:s A"); ?>
+                  <?php echo $time; ?>
+                  <?php echo $cur_time; ?> -->
+
+                  <!-- <div class='col-md-5'><?php echo '<img width="100%" height="auto" src="data:image/jpeg;base64,'.base64_encode($time_records[0]['image']).'"/>' ?></div> -->
                 </div>           
-            </main>
+              </main>
         </div>
     </div>
 
-    <!-- TimeIn Modal -->
-    <div class="modal fade" id="timeInModal" tabindex="-1" aria-labelledby="timeInModalLabel" aria-hidden="true">
+    <!-- TimeIn TimeOut Modal -->
+    <div class="modal fade" id="timeInOutModal" tabindex="-1" aria-labelledby="timeInModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header" style="background-color: transparent">
-            <h3 class="modal-title"><b>Time In</b></h3>
+            <h3 class="modal-title" id="modal-title"><b></b></h3>
             <button type="button" class="close" aria-label="Close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -192,11 +210,20 @@
             <form id="time_in" method="POST">
               <div class="form-row">
                 <div class="col-md-12 mb-2">
-                  <input type="text" class="form-control" name="current_time" value=<?php echo date("h:i:sa"); ?> id="current_time" >  
+                  <input type="text" class="form-control" name="current_time" value=<?php echo date("h:i:sa"); ?> id="current_time" style='font-size: 20px;' readonly>  
+                </div>
+                <div class='mt-2 px-2'>
+                  <video id="video" width="100%" height="auto"></video>
+                </div>
+                <div class='mt-2 px-2'>
+                  <img id="captured-image" width="100%" height="auto" alt="">
                 </div>
               </div>
             </form>
-          </div>
+            
+            <!-- Type -->
+            <span id="type-in-out" hidden></span>
+            <!-- Type -->
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="captureTimeInBtn">Capture</button>
             <button type="button" class="btn btn-secondary" id="confirmTimeInBtn">Save</button>
@@ -205,32 +232,63 @@
       </div>
     </div>
 
-    <!-- TimeOut Modal -->
-    <div class="modal fade" id="timeOutModal" tabindex="-1" aria-labelledby="timeOutModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: transparent">
-            <h3 class="modal-title"><b>Time Out</b></h3>
-            <button type="button" class="close" aria-label="Close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
+    <!-- Loading Modal  -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered text-center" role="document">
+          <div class="col-md-12 d-flex justify-content-center text-white text-center">
+              <span style="font-size: 20px; color: #FFFFFF;">
+                  <i class="fa fa-spinner fa-spin fa-3x w-100" aria-hidden="true"></i>
+              </span>
           </div>
-          <div class="modal-body">
-            <form id="time_in" method="POST">
-              <div class="form-row">
-                <div class="col-md-12 mb-2">
-                  <input type="text" class="form-control" name="current_time" value=<?php echo date("h:i:sa"); ?> id="current_time" >  
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="captureTimeOutBtn">Capture</button>
-            <button type="button" class="btn btn-secondary" id="confirmTimeOutBtn">Save</button>
-          </div>
-        </div>
-      </div>
+      </div>        
     </div>
+
+    <script>
+      var video = document.querySelector("#video");
+      var canvas = document.createElement("canvas");
+      var context = canvas.getContext("2d");
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch(function(err) {
+          console.log("An error occurred: " + err);
+        });
+
+      document.querySelector("#captureTimeInBtn").addEventListener("click", function() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var dataUrl = canvas.toDataURL();
+        document.querySelector("#captured-image").setAttribute("src", dataUrl);
+
+        document.getElementById('video').style.display = 'none';
+        document.getElementById('captureTimeInBtn').disabled = true;
+      });
+
+      // $('#imageModal').on('hidden.bs.modal', function (e) {
+      //   video.srcObject.getTracks()[0].stop();
+      // });
+    </script>
+
+    <!-- Video Preview -->
+    <!-- <script>
+      var video = document.querySelector("#video");
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+          video.srcObject = stream;
+          video.play();
+        })
+        .catch(function(err) {
+          console.log("An error occurred: " + err);
+        });
+
+      $('#cameraModal').on('hidden.bs.modal', function (e) {
+        video.srcObject.getTracks()[0].stop();
+      });
+    </script> -->
 
     <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/bootstrap.bundle.min.js"></script>
@@ -245,44 +303,47 @@
             alert($('#year').val());
           });
 
-          $("#timeOutBtn").click(function(){
-            $('#timeOutModal').modal('show');
+          $('#timeInOutModal').on('hidden.bs.modal', function () {
+            // Clear previous image
+            document.getElementById('captured-image').setAttribute('src', '');
           });
 
-          $("#confirmTimeOutBtn").click(function(){
-            var flag = 0;
-            var current_time = $('#current_time').val();
-            var type = 'time_out';
+          // View Time in Time out modal
+          $('#timeInOutModal').on('show.bs.modal',function (event) {
+              // Clear previous image
+              // document.getElementById('captured-image').setAttribute('src', '');
 
-            alert(current_time);
+              document.getElementById('captureTimeInBtn').disabled = false;
+              document.getElementById('video').style.display = 'block';
 
-            if (flag == 0) {
-              $.ajax({
-              url: "<?php echo base_url(); ?>dtr/time_in_out",
-              method: 'POST',
-              dataType: "JSON",
-              data: {
-                current_time: current_time, 
-              },
-              success: function (response) {
-                console.log(response);
-                $('#timeInModal').modal('toggle');
-              },
-              error: function (request, status, error) {
-                alert(request.responseText);
-              }
-              });
-            } 
-          });
-
-          $("#timeInBtn").click(function(){
-            $('#timeInModal').modal('show');
+              // Button that triggered the modal
+              var e = $(event.relatedTarget);
+  
+              // Extract info from data attributes 
+              var type = e.data('type');
+              var title = e.data('title');
+              
+              // jQuery query selectors
+              var modal = $(this);
+                  
+              document.getElementById("modal-title").innerHTML = title;
+              document.getElementById("type-in-out").innerHTML = type;
+              
+              // for textfield
+              // document.getElementById("#").value = "value";
           });
 
           $("#confirmTimeInBtn").click(function(){
             var flag = 0;
             var current_time = $('#current_time').val();
-            var type = 'time_in';
+            var type = document.getElementById("type-in-out").innerHTML;
+            var image = $('#captured-image').prop('src'); // or attr sa prop
+
+            if (image == '' || image == undefined) {
+              $('#video').css('border', '1px solid red');
+              // document.getElementById("new-title-err").innerHTML = "<span style='color: red;'><strong>Can't be blank!</strong></span>";
+              flag = 1;
+            }
 
             if (flag == 0) {
               $.ajax({
@@ -290,21 +351,24 @@
               method: 'POST',
               dataType: "JSON",
               data: {
+                type: type,
                 current_time: current_time, 
+                image: image,
               },
               success: function (response) {
                 console.log(response);
-                $('#timeInModal').modal('toggle');
-                // if (result['error'] == false){
-                //   // alert("Success!");
-                //   $('#loadingLoginSuccessModal').modal('show');
+                $('#timeInOutModal').modal('toggle');
+
+                // $('#loadingModal').modal('show');
+                // if (response == "Time in successfully (AM)"){
+                //   $('#timeInOutModal').modal('toggle');
                 //   setTimeout(function() {
-                //     $('#loadingLoginSuccessModal').modal('hide');
+                //     $('#loadingModal').modal('toggle');
                 //     window.location.href = '<?php echo base_url(); ?>main/index';
                 //   }, 2000);
                 // } else {
-                //   document.getElementById("errorPtag").innerHTML = result['message'];
-                //   $('#errorModal').modal('show');
+                //   // document.getElementById("errorPtag").innerHTML = result['message'];
+                //   // $('#errorModal').modal('show');
 
                 //   setTimeout(function() {
                 //     window.location.reload();
