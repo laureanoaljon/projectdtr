@@ -45,7 +45,7 @@ class Dtr extends CI_Controller {
         // Pagkuha ng image using path, para masave sa database
         $imagessss = addslashes(file_get_contents('./assets/'.$image_title.'.png'));
 
-        $result = $this->dtrmodel->save_time_in_out($employee_db_id, date('H:i:s', strtotime('11:55')), $current_date, $type, $imagessss);
+        $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type, $imagessss);
 
         echo json_encode($result);
 	}

@@ -148,37 +148,37 @@
                       <tbody>
                         <?php for ($x = 1; $x <= $days; $x++) { ?>
                           <?php $day = date('D', strtotime("{$year}-{$month}-{$x}")); ?>
-                          <?php for ($y = 0; $y < count($time_records); $y++ ) { ?>
-                            <?php if ($x == date('d', strtotime($time_records[$y]['date']))) { ?>
-                              <?php if ($day == "Sun" || $day == "Sat") {?>
-                                <tr style="background-color: #d3d3d3;">
+                            <?php for ($y = 0; $y < count($time_records); $y++ ) { ?>
+                              <?php if ($x == date('d', strtotime($time_records[$y]['date']))) { ?>
+                                <?php if ($day == "Sun" || $day == "Sat") {?>
+                                  <tr style="background-color: #d3d3d3;">
+                                <?php } else { ?>
+                                  <tr>
+                                <?php } ?>
+                                    <th scope="row"><?php echo $x; ?></th>
+                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_in'])); ?></td>
+                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_out'])); ?></td>
+                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_in'])); ?></td>
+                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_out'])); ?></td>
+                                    <td style="text-align: center";><?php echo $day; ?></td>
+                                    <td></td>
+                                  </tr>
                               <?php } else { ?>
-                                <tr>
-                              <?php } ?>
-                                  <th scope="row"><?php echo $x; ?></th>
-                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_in'])); ?></td>
-                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_out'])); ?></td>
-                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_in'])); ?></td>
-                                  <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_out'])); ?></td>
-                                  <td style="text-align: center";><?php echo $day; ?></td>
-                                  <td></td>
-                                </tr>
-                            <?php } else { ?>
-                              <?php if ($day == "Sun" || $day == "Sat") { ?>
-                                <tr style="background-color: #d3d3d3;">
-                              <?php } else { ?>
-                                <tr>
-                              <?php } ?>
-                                  <th scope="row"><?php echo $x; ?></th>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td style="text-align: center";><?php echo $day; ?></td>
-                                  <td></td>
-                                </tr>
+                                <?php if ($day == "Sun" || $day == "Sat") { ?>
+                                  <tr style="background-color: #d3d3d3;">
+                                <?php } else { ?>
+                                  <tr>
+                                <?php } ?>
+                                    <th scope="row"><?php echo $x; ?></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align: center";><?php echo $day; ?></td>
+                                    <td></td>
+                                  </tr>
+                            <?php } ?>
                           <?php } ?>
-                        <?php } ?>
                         <?php } ?>
                       </tbody>
                     </table>
