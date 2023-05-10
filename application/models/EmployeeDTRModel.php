@@ -11,4 +11,15 @@ class EmployeeDTRModel extends CI_Model{
         return $query->result();
     }
 
+    function insertTimeInData($emp_dbid, $time_in, $date_in){
+        $data = array(
+                'employee_db_id' => $emp_dbid,
+                'am_time_in' => $time_in,
+                'date' => $date_in
+        );
+    
+        $this->db->insert('time_records', $data);
+        return "time in successful";
+    }
+
 }

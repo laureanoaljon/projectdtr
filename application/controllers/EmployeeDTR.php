@@ -40,56 +40,17 @@ class EmployeeDTR extends CI_Controller{
 
     public function insertTimeInData(){
         
-        //$chartmap2_mode_fn2 = $this->uri->segment('3');
-        $data['test'] = $this->input->post('time_in');
+        $this->input->post('time_in');
 
-        
-
-        // //pwede na ata tanggalin? tong first if
-        // if($loc_level_sessdata_fn2 == null){
-        //     $loc_sessdata_fn2 = array( 
-        //         'cmap1cat_prodsupp'=>'seed'
-        //      );   
-        //     $this->session->set_userdata($loc_sessdata_fn2);
-
-        //     $chartmap2data = $this->prodsupp->getChartMap1Data_singleDset('2021', 'reg', 3, $chartmap2_mode_fn2, $this->input->post('cat'));
-
-        // }
-        // else if($loc_level_sessdata_fn2 == 'region'){
-        //     $locid_qparam_region = 3;
-
-        //     $chartmap2data =  $this->prodsupp->getChartMap1Data_singleDset('2021', 'reg', $locid_qparam_region, $chartmap2_mode_fn2, $this->input->post('cat'));
-        // }
-        // else if($loc_level_sessdata_fn2 == 'province'){
-        //     $locid_qparam = $this->input->post('current_locid');
-        //     //$loclevel_qparam = 'province';
-
-        //     $chartmap2data =  $this->prodsupp->getChartMap1Data_singleDset('2021', 'prov', $locid_qparam, $chartmap2_mode_fn2, $this->input->post('cat'));
-        // }
-        // else if($loc_level_sessdata_fn2 == 'municipality'){
-        //     $locid_qparam = $this->input->post('current_locid');
-        //     // $loclevel_qparam = 'municipality';
-
-        //     $chartmap2data =  $this->prodsupp->getChartMap1Data_singleDset('2021', 'muni', $locid_qparam, $chartmap2_mode_fn2, $this->input->post('cat'));
-        //     // $data['chartmap2_modes_display'] = 'display:none;';
-        //     // $data['chartmap2_perloc_display'] = 'display:none;';
-
-        // }
-        
-        // $this->session->set_userdata('cmap1cat_prodsupp',$this->input->post('cat'));
-
-
-           //chart and map data - extserv rendered
-    
-
+        $emp_dtr = $this->empdtr->insertTimeInData($this->input->post('emp_dbid'), $this->input->post('time_in'), $this->input->post('date_in'));
 
         // $response1 = $chartmap2data->categ1;
         // $response2 =  $chartmap2data->map1data_jsonstring;
-        
         // $ajaxresponse = array($response1, $response2);
-        
-        $ajaxresponse = "time_in:".$data['test'];
-        echo json_encode($ajaxresponse);
+        //$ajaxresponse = "time_in:".$data['test'];
+
+        //$this->input->post('emp_dbid').",". $this->input->post('time_in').",". $this->input->post('date_in')
+        echo json_encode($emp_dtr);
 
         //echo $response1;
 

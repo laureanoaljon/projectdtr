@@ -300,6 +300,7 @@
         $('#select_employee').change(function() {
         var selected_employee = $('#select_employee').val();
 
+
         
         if(selected_employee == "Select"){
             document.getElementById("timein_btn").disabled = true;
@@ -377,8 +378,11 @@
             // alert(time_in);
             // alert(date_in);
             
+            var selected_employee = $('#select_employee').val();
+          
+
             $.ajax({
-            url: '<php echo base_url(); ?>/insert-timeindata',
+            url: '<?php echo base_url(); ?>/insert-timeindata',
             type: 'POST',
             data: {emp_dbid: selected_employee, time_in:time_in, date_in: date_in},
             error: function() {
@@ -387,6 +391,8 @@
             success: function(data) {
                     var array_response = JSON.parse(data);
                     alert(array_response);
+                    $('#timein_modal').modal('hide');
+
             }
             });
         }
