@@ -146,9 +146,11 @@
                       </thead>
 
                       <tbody>
+                        <?php $test_arr = array(); ?>
                         <?php for ($x = 1; $x <= $days; $x++) { ?>
                           <?php $day = date('D', strtotime("{$year}-{$month}-{$x}")); ?>
-                            <?php for ($y = 0; $y < count($time_records); $y++ ) { ?>
+                            
+                            <?php for ($y = 0; $y < count($time_records); $y++) { ?> 
                               <?php if ($x == date('d', strtotime($time_records[$y]['date']))) { ?>
                                 <?php if ($day == "Sun" || $day == "Sat") {?>
                                   <tr style="background-color: #d3d3d3;">
@@ -156,29 +158,32 @@
                                   <tr>
                                 <?php } ?>
                                     <th scope="row"><?php echo $x; ?></th>
-                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_in'])); ?></td>
-                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['am_time_out'])); ?></td>
-                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_in'])); ?></td>
-                                    <td><?php echo date('H:i A',strtotime($time_records[$y]['pm_time_out'])); ?></td>
+                                    <td><?php if (!empty($time_records[$y]['am_time_in'])) { echo date('h:i A',strtotime($time_records[$y]['am_time_in'])); } ?></td>
+                                    <td><?php if (!empty($time_records[$y]['am_time_out'])) { echo date('h:i A',strtotime($time_records[$y]['am_time_out'])); } ?></td>
+                                    <td><?php if (!empty($time_records[$y]['pm_time_in'])) { echo date('h:i A',strtotime($time_records[$y]['pm_time_in'])); }  ?></td>
+                                    <td><?php if (!empty($time_records[$y]['pm_time_out'])) { echo date('h:i A',strtotime($time_records[$y]['pm_time_out'])); } ?></td>
                                     <td style="text-align: center";><?php echo $day; ?></td>
                                     <td></td>
                                   </tr>
-                              <?php } else { ?>
-                                <?php if ($day == "Sun" || $day == "Sat") { ?>
-                                  <tr style="background-color: #d3d3d3;">
-                                <?php } else { ?>
-                                  <tr>
-                                <?php } ?>
-                                    <th scope="row"><?php echo $x; ?></th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td style="text-align: center";><?php echo $day; ?></td>
-                                    <td></td>
-                                  </tr>
+                                  <?php array_push($test_arr, $x); ?>
+                              <?php } ?>
                             <?php } ?>
-                          <?php } ?>
+
+                            <?php if (!in_array($x, $test_arr)) { ?>
+                              <?php if ($day == "Sun" || $day == "Sat") {?>
+                                <tr style="background-color: #d3d3d3;">
+                              <?php } else { ?>
+                                <tr>
+                              <?php } ?>
+                                  <th scope="row"><?php echo $x; ?></th>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td style="text-align: center";><?php echo $day; ?></td>
+                                  <td></td>
+                                </tr>
+                            <?php } ?>
                         <?php } ?>
                       </tbody>
                     </table>
@@ -243,7 +248,7 @@
       </div>        
     </div>
 
-    <script>
+    <!-- <script>
       var video = document.querySelector("#video");
       var canvas = document.createElement("canvas");
       var context = canvas.getContext("2d");
@@ -271,7 +276,7 @@
       // $('#imageModal').on('hidden.bs.modal', function (e) {
       //   video.srcObject.getTracks()[0].stop();
       // });
-    </script>
+    </script> -->
 
     <!-- Video Preview -->
     <!-- <script>
@@ -299,6 +304,21 @@
         var sidebarjs = new SidebarJS.SidebarElement();
 
         $(document).ready(function(){
+          var video = document.querySelector("#video");
+          var canvas = document.createElement("canvas");
+          var context = canvas.getContext("2d");
+
+          $("#captureTimeInBtn").click(function(){
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var dataUrl = canvas.toDataURL();
+            document.querySelector("#captured-image").setAttribute("src", dataUrl);
+
+            document.getElementById('video').style.display = 'none';
+            document.getElementById('captureTimeInBtn').disabled = true;
+          });
+
           $("#year").change(function(){
             alert($('#year').val());
           });
@@ -312,6 +332,15 @@
           $('#timeInOutModal').on('show.bs.modal',function (event) {
               // Clear previous image
               // document.getElementById('captured-image').setAttribute('src', '');
+
+              navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                  video.srcObject = stream;
+                  video.play();
+                })
+                .catch(function(err) {
+                  console.log("An error occurred: " + err);
+                });
 
               document.getElementById('captureTimeInBtn').disabled = false;
               document.getElementById('video').style.display = 'block';
