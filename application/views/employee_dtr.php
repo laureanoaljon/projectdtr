@@ -248,32 +248,23 @@
                       <div class="col-11">
                         <!-- Table -->
                         <table class="table table-bordered" style="background-color: #fff;">
-                          <thead style="background-color: #D3D3D3;">
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">First</th>
-                              <th scope="col">Last</th>
-                              <th scope="col">Handle</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">3</th>
-                              <td colspan="2">Larry the Bird</td>
-                              <td>@twitter</td>
-                            </tr>
+                        <thead style="background-color: #D3D3D3;">
+                        <tr>
+                          <th scope="col" rowspan="2" style="width: 5%;  vertical-align: middle;">Date</th>
+                          <th scope="col" colspan="2">Morning</th>
+                          <th scope="col" colspan="2">Afternoon</th>
+                          <th scope="col" rowspan="2" style="vertical-align: middle;">Day</th>
+                          <th scope="col" rowspan="2" style="width: 50%;  vertical-align: middle;">Evaluation</th>
+                        </tr>
+                        <tr>
+                          <th scope="col">Time-in</th>
+                          <th scope="col">Time-out</th>
+                          <th scope="col">Time-in</th>
+                          <th scope="col">Time-out</th>
+                        </tr>
+                      </thead>
+                          <tbody id="table_body">
+                            
                           </tbody>
                         </table>
                       </div>
@@ -296,7 +287,38 @@
     <script>
         var sidebarjs = new SidebarJS.SidebarElement();
 
-        var selected_employee;
+
+        function getEmployeeDTR(emp_dbid){
+            $.ajax({
+            url: '<?php echo base_url(); ?>/get-empdtr',
+            type: 'POST',
+            data: {emp_dbid: emp_dbid},
+            error: function() {
+                alert('Something went wrong upon the data request.');
+            },
+            success: function(data) {
+                    var array_response = JSON.parse(data);
+
+                    var table_content = "";
+                    for (let i = 0 ; i < array_response.length; i++) {
+                        table_content += '<tr>';
+                        table_content += '<td>'+array_response[i].date+'</td>'
+                        table_content += '<td>'+array_response[i].am_time_in+'</td>'
+                        table_content += '<td>'+array_response[i].am_time_out+'</td>'
+                        table_content += '<td>'+array_response[i].pm_time_in+'</td>'
+                        table_content += '<td>'+array_response[i].pm_time_out+'</td>'
+                        table_content += '<td></td>'
+                        table_content += '<td></td>'
+                        table_content += '</tr>';
+                        
+                    }
+                    //console.log(array_response);
+                    document.getElementById("table_body").innerHTML = table_content;
+            }
+            });
+        }
+
+        
         $('#select_employee').change(function() {
         var selected_employee = $('#select_employee').val();
 
@@ -309,7 +331,7 @@
         else{
             document.getElementById("timein_btn").disabled = false;
             document.getElementById("timeout_btn").disabled = false;
-            
+            getEmployeeDTR(selected_employee);
         }
             
     });
@@ -392,7 +414,7 @@
                     var array_response = JSON.parse(data);
                     alert(array_response);
                     $('#timein_modal').modal('hide');
-
+                    getEmployeeDTR(selected_employee);
             }
             });
         }

@@ -11,6 +11,16 @@ class EmployeeDTRModel extends CI_Model{
         return $query->result();
     }
 
+    function getEmployeeDtr($emp_dbid){
+        
+        $this->db->select('*');
+        $this->db->where('employee_db_id', $emp_dbid);
+        $this->db->order_by('date', 'ASC');
+        
+        $query = $this->db->get('time_records');
+        return $query->result();
+    }
+
     function insertTimeInData($emp_dbid, $time_in, $date_in){
         $data = array(
                 'employee_db_id' => $emp_dbid,
