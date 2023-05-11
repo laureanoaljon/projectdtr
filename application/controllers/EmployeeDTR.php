@@ -27,7 +27,7 @@ class EmployeeDTR extends CI_Controller{
 
             $data['employees_data'] = $this->empdtr->getEmployees();
 
-
+            //echo date("g:i a", strtotime("13:30"));
             $this->load->view('employee_dtr', $data);
         } else {
             $data = array();
@@ -40,7 +40,9 @@ class EmployeeDTR extends CI_Controller{
 
     public function insertTimeInData(){
         
-        $emp_dtr = $this->empdtr->insertTimeInData($this->input->post('emp_dbid'), $this->input->post('time_in'), $this->input->post('date_in'));
+        $time_in_24_hour_format  = date("H:i", strtotime($this->input->post('time_in')));
+
+        $emp_dtr = $this->empdtr->insertTimeInData($this->input->post('emp_dbid'), $time_in_24_hour_format, $this->input->post('date_in'));
 
         // $response1 = $chartmap2data->categ1;
         // $response2 =  $chartmap2data->map1data_jsonstring;

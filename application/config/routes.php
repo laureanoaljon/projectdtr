@@ -55,3 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['insert-timeindata']['post'] = 'employeedtr/insertTimeInData';
 $route['get-empdtr']['post'] = 'employeedtr/getEmployeeDtr';
+$route['insert-newuserdata']['post'] = 'activeuseraccount/insertUserAccount';
+$route['get-activeaccounts']['post'] = 'activeuseraccount/getActiveUserAccounts';
