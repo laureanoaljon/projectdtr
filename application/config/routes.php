@@ -57,3 +57,6 @@ $route['insert-timeindata']['post'] = 'employeedtr/insertTimeInData';
 $route['get-empdtr']['post'] = 'employeedtr/getEmployeeDtr';
 $route['insert-newuserdata']['post'] = 'activeuseraccount/insertUserAccount';
 $route['get-activeaccounts']['post'] = 'activeuseraccount/getActiveUserAccounts';
+$route['get-accountdata']['post'] = 'activeuseraccount/getAccountData';
+$route['edit-userdata']['post'] = 'activeuseraccount/editUserAccount';
+$route['archive-user']['post'] = 'activeuseraccount/archiveUserAccount';

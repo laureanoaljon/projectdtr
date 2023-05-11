@@ -53,9 +53,27 @@ class ActiveUserAccount extends CI_Controller{
         public function getActiveUserAccounts(){
 
             $active_accounts = $this->acctman->getActiveUserAccounts();
-    
             echo json_encode($active_accounts);
     
         }
 
+        public function getAccountData(){
+            $account_data = $this->acctman->getAccountData($this->input->post('emp_dbid'));
+            echo json_encode($account_data);
+        }
+
+
+        public function editUserAccount(){
+            
+            $result = $this->acctman->editUserAccount($this->input->post('db_id'),$this->input->post('idnumber'),$this->input->post('sname'),$this->input->post('fname'),$this->input->post('cat'));
+            echo json_encode($result);
+        }
+
+        public function archiveUserAccount(){
+            
+            $result = $this->acctman->archiveUserAccount($this->input->post('db_id'));
+            echo json_encode($result);
+        }
+
+    
 }

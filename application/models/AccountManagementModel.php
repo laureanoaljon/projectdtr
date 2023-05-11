@@ -11,6 +11,15 @@ class AccountManagementModel extends CI_Model{
         return $query->result();
     }
 
+    function getAccountData($emp_dbid){
+        
+        $this->db->select('*');
+        $this->db->where("db_id", $emp_dbid);
+        
+        $query = $this->db->get('employee');
+        return $query->row();
+    }
+
 
     function insertUserAccount($idnumber, $sname, $fname, $cat, $pw){
         $data = array(
@@ -25,4 +34,35 @@ class AccountManagementModel extends CI_Model{
         $this->db->insert('employee', $data);
         return "New User Account created";
     }
+
+
+
+    function editUserAccount($db_id, $idnumber, $sname, $fname, $cat){
+       
+        $this->db->set('employee_id', $idnumber);
+        $this->db->set('s_name', $sname);
+        $this->db->set('f_name', $fname);
+        $this->db->set('category', $cat);
+        $this->db->where('db_id', $db_id);
+        $this->db->update('employee'); // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
+
+        
+        return "User Account edited";
+
+    }
+
+    function archiveUserAccount($db_id){
+       
+        $this->db->set('is_active', 0);
+        $this->db->where('db_id', $db_id);
+        $this->db->update('employee'); // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
+
+        
+        return "User Account archived";
+
+    }
+
+
+
+
 }
