@@ -62,7 +62,13 @@ class AccountManagementModel extends CI_Model{
 
     }
 
-
+    function getArchivedUserAccounts(){
+        $this->db->select('*');
+        $this->db->where("is_active", 0);
+        
+        $query = $this->db->get('employee');
+        return $query->result();
+    }
 
 
 }
