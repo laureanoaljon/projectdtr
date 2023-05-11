@@ -128,8 +128,8 @@ div#sidebarView nav.navbar a.w-100 {
 }
 
 div#sidebarView nav.navbar a.w-100.active {
-    color: #fff !important;
-    font-size: 1.25em !important;
+    color: #a594ed !important;
+    font-weight: bold !important;
 }
 
 div#sidebarView .content .navbar {

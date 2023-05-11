@@ -31,4 +31,33 @@ class LoginModel extends CI_Model
 
         return $data;
     }
+
+    public function change_password($employee_id, $current_password, $new_password, $confirm_password){
+        $this->db->select('*');
+        $this->db->from('employee');
+        $this->db->where('employee_id', $employee_id);
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0){
+            $user = $query->result_array();
+
+            if ($new_password != $confirm_password){
+                $data['message'] = 'New and Re-enter does not match.';
+            } else if ($user[0]['password'] != $current_password){
+                $data['message'] = "Current Password did not match the user's password.";
+            } else if ($user[0]['password'] == $new_password){
+                $data['message'] = 'Current and New are the same.';
+            } else {
+                $this->db->set('password', $new_password);
+                $this->db->where('employee_id', $employee_id);
+                $this->db->update('employee');
+
+                $data['message'] = 'Successfully change password.';
+            }
+        } else {
+            $data['message'] = 'Employee not found!';
+        }
+
+        return $data;
+    }
 }

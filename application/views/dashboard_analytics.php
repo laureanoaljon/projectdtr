@@ -38,8 +38,8 @@
                 <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-chevron-left"></i></div>
                 <nav class="navbar flex-column mt-2 text-left">
                   <h4 class="text-white text-left">Menu</h4>
-                  <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
-                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
+                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
+                  <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
                   <?php if ($category != "employee"){?>
                     <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR</a>
                     <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
@@ -76,7 +76,7 @@
 
                 <div class="col-md-12">
                   <div class="col-md-10 ml-3 mt-2">
-                    <h1 style="color: gray; font-size: 32px;">Personal DTR</h1>
+                    <h1 style="color: gray; font-size: 32px;">Personal DTR Analytics</h1>
                   </div>
                 </div>
 
@@ -87,18 +87,18 @@
                         <div class="col-6">
                             <!-- Month -->
                             <select id="month" name="month" class="border rounded pass-label" style="text-align-last: center; height: 40px; width: 150px;" data-live-search="true">
-                                <option value="01" <?php if ($month == '01'){  echo "selected"; } ?>>January</option>
-                                <option value="02" <?php if ($month == '02'){  echo "selected"; } ?>>February</option>
-                                <option value="03" <?php if ($month == '03'){  echo "selected"; } ?>>March</option>
-                                <option value="04" <?php if ($month == '04'){  echo "selected"; } ?>>April</option>
-                                <option value="05" <?php if ($month == '05'){  echo "selected"; } ?>>May</option>
-                                <option value="06" <?php if ($month == '06'){  echo "selected"; } ?>>June</option>
-                                <option value="07" <?php if ($month == '07'){  echo "selected"; } ?>>July</option>
-                                <option value="08" <?php if ($month == '08'){  echo "selected"; } ?>>August</option>
-                                <option value="09" <?php if ($month == '09'){  echo "selected"; } ?>>September</option>
-                                <option value="10" <?php if ($month == '10'){  echo "selected"; } ?>>October</option>
-                                <option value="11" <?php if ($month == '11'){  echo "selected"; } ?>>November</option>
-                                <option value="12" <?php if ($month == '12'){  echo "selected"; } ?>>December</option>
+                                <option value="January" <?php if ($month == '01'){  echo "selected"; } ?>>January</option>
+                                <option value="February" <?php if ($month == '02'){  echo "selected"; } ?>>February</option>
+                                <option value="March" <?php if ($month == '03'){  echo "selected"; } ?>>March</option>
+                                <option value="April" <?php if ($month == '04'){  echo "selected"; } ?>>April</option>
+                                <option value="May" <?php if ($month == '05'){  echo "selected"; } ?>>May</option>
+                                <option value="June" <?php if ($month == '06'){  echo "selected"; } ?>>June</option>
+                                <option value="July" <?php if ($month == '07'){  echo "selected"; } ?>>July</option>
+                                <option value="August" <?php if ($month == '08'){  echo "selected"; } ?>>August</option>
+                                <option value="September" <?php if ($month == '09'){  echo "selected"; } ?>>September</option>
+                                <option value="October" <?php if ($month == '10'){  echo "selected"; } ?>>October</option>
+                                <option value="November" <?php if ($month == '11'){  echo "selected"; } ?>>November</option>
+                                <option value="December" <?php if ($month == '12'){  echo "selected"; } ?>>December</option>
                             </select>
 
                             <!-- Year -->
@@ -112,108 +112,172 @@
                             </select>
                         </div>
 
-                        <div class="col-4">
-											    <button class="btn btn-secondary" type="button" id="printDtrTable">Print DTR Table</button>
-                          <button class="btn btn-secondary" type="button" id="printDtrForm">Print DTR Form</button>
-                        </div>
-
-                        <div class="col-2 text-right">
-											    <button class="btn btn-secondary" type="button" id="timeInBtn" data-type="timeIn" data-title='Time In' data-toggle="modal" data-target="#timeInOutModal">Time In</button>
-                          <button class="btn btn-secondary" type="button" id="timeOutBtn" data-type="timeOut" data-title='Time Out' data-toggle="modal" data-target="#timeInOutModal">Time Out</button>
+                        <div class="col-6 text-right">
+                          <button class="btn btn-secondary" type="button" id="printAnalytics" data-type="" data-title="" data-toggle="modal" data-target="#targetModal">Print Analytics</button>
                         </div>
                     </div>
                   </div>
                 </div>
 
                 <div class="col-md-12">
-                  <div class="col-md-12 mt-4 ml-2">
-                    <!-- Table -->
-                    <table class="table table-bordered" style="background-color: #fff;">
-                      <thead style="background-color: #D3D3D3;">
-                        <tr>
-                          <th scope="col" rowspan="2" style="width: 5%;  vertical-align: middle;">Date</th>
-                          <th scope="col" colspan="2">Morning</th>
-                          <th scope="col" colspan="2">Afternoon</th>
-                          <th scope="col" rowspan="2" style="vertical-align: middle;">Day</th>
-                          <th scope="col" rowspan="2" style="width: 50%;  vertical-align: middle;">Evaluation</th>
-                        </tr>
-                        <tr>
-                          <th scope="col">Time-in</th>
-                          <th scope="col">Time-out</th>
-                          <th scope="col">Time-in</th>
-                          <th scope="col">Time-out</th>
-                        </tr>
-                      </thead>
+                    <div class="col-md-12 mt-3 ml-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Monthly Summary</h5>
+                                <p>in number of days</p>
 
-                      <tbody id="table-body">
-                        <?php $test_arr = array(); ?>
-                        <?php for ($x = 1; $x <= $days; $x++) { ?>
-                          <?php $day = date('D', strtotime("{$year}-{$month}-{$x}")); ?>
-                            
-                            <?php for ($y = 0; $y < count($time_records); $y++) { ?> 
-                              <?php if ($x == date('d', strtotime($time_records[$y]['date']))) { ?>
-                                <?php if ($day == "Sun" || $day == "Sat") {?>
-                                  <tr style="background-color: #d3d3d3;">
-                                <?php } else { ?>
-                                  <tr>
-                                <?php } ?>
-                                    <th scope="row"><?php echo $x; ?></th>
-                                    <td><?php if (!empty($time_records[$y]['am_time_in'])) { echo date('h:i A',strtotime($time_records[$y]['am_time_in'])); } ?></td>
-                                    <td><?php if (!empty($time_records[$y]['am_time_out'])) { echo date('h:i A',strtotime($time_records[$y]['am_time_out'])); } ?></td>
-                                    <td><?php if (!empty($time_records[$y]['pm_time_in'])) { echo date('h:i A',strtotime($time_records[$y]['pm_time_in'])); }  ?></td>
-                                    <td><?php if (!empty($time_records[$y]['pm_time_out'])) { echo date('h:i A',strtotime($time_records[$y]['pm_time_out'])); } ?></td>
-                                    <td style="text-align: center";><?php echo $day; ?></td>
-                                    <td></td>
-                                  </tr>
-                                  <?php array_push($test_arr, $x); ?>
-                              <?php } ?>
-                            <?php } ?>
+                                <div class="row px-2">
+                                    <div class="col-sm">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Workdays</h5>
+                                                <p class="card-text" style="font-size: 40px;">23</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <?php if (!in_array($x, $test_arr)) { ?>
-                              <?php if ($day == "Sun" || $day == "Sat") {?>
-                                <tr style="background-color: #d3d3d3;">
-                              <?php } else { ?>
-                                <tr>
-                              <?php } ?>
-                                  <th scope="row"><?php echo $x; ?></th>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td style="text-align: center";><?php echo $day; ?></td>
-                                  <td></td>
-                                </tr>
-                            <?php } ?>
-                        <?php } ?>
-                      </tbody>
-                    </table>
-                  </div>
-                          
-                  <!-- <?php 
-                    $year = '2023';
-                    $month = '04';
+                                    <div class="col-sm">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Present</h5>
+                                                <p class="card-text" style="font-size: 40px;">20</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                    $data['year'] = $year;
-                    $data['month'] = $month;
-                    $data['days'] = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-    
-                    $employee_id = $_SESSION['user']['db_id'];
-                    $selected_year_month = date("Y-m", strtotime(''.$year.'-'.$month.''));
+                                    <div class="col-sm">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Absent</h5>
+                                                <p class="card-text" style="font-size: 40px;">3</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                    $data['time_records'] = $this->dtrmodel->get_time_records($employee_id, $selected_year_month);
+                                    <div class="col-sm">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Tardy</h5>
+                                                <p class="card-text" style="font-size: 40px;">1</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                    echo $data['time_records'];
-                  
-                  ?> -->
+                                    <div class="col-sm">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Undertime</h5>
+                                                <p class="card-text" style="font-size: 40px; ">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                  <!-- <?php $time = date("H:i:s A", strtotime('16:10')); ?>
-                  <?php $cur_time = date("H:i:s A"); ?>
-                  <?php echo $time; ?>
-                  <?php echo $cur_time; ?> -->
+                                    <div class="col-sm">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Overtime</h5>
+                                                <p class="card-text" style="font-size: 40px;">2</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                  <!-- <div class='col-md-5'><?php echo '<img width="100%" height="auto" src="data:image/jpeg;base64,'.base64_encode($time_records[0]['image']).'"/>' ?></div> -->
+                                    <div class="col-sm">
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Half-day</h5>
+                                                <p class="card-text" style="font-size: 40px;">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-3 ml-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>Yearly Summary</h5>
+                                <p>in number of days</p>
+
+                                <div class="row px-2">
+                                    <div class="col-lg">
+                                        <div class="card bg-light mb-3" style="max-width: auto;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Present</h5>
+                                                <p class="card-text" style="font-size: 40px;">270</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg">
+                                        <div class="card bg-light mb-3" style="max-width: auto;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Absent</h5>
+                                                <p class="card-text" style="font-size: 40px;">5</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row px-2">
+                                    <div class="col-lg">
+                                        <div class="card bg-light mb-3" style="max-width: auto;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Tardy</h5>
+                                                <p class="card-text" style="font-size: 40px;">3</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg">
+                                        <div class="card bg-light mb-3" style="max-width: auto;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Undertime</h5>
+                                                <p class="card-text" style="font-size: 40px;">5</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row px-2">
+                                    <div class="col-lg">
+                                        <div class="card bg-light mb-3" style="max-width: auto;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Overtime</h5>
+                                                <p class="card-text" style="font-size: 40px;">10</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg">
+                                        <div class="card bg-light mb-3" style="max-width: auto;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Half-day</h5>
+                                                <p class="card-text" style="font-size: 40px;">6</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>           
-              </main>
+            </main>
         </div>
     </div>
 
@@ -418,68 +482,8 @@
             document.getElementById('captureTimeInBtn').disabled = true;
           });
 
-          // Change month, change table value
-          $("#month").change(function(){
-            var month = $('#month').val();
-            var year = $('#year').val();
-
-            $.ajax({
-              url: "<?php echo base_url(); ?>dtr/get_time_records",
-              method: 'POST',
-              dataType: "JSON",
-              data: {
-                month: month,
-                year: year, 
-              },
-              success: function (response) {
-                console.log(response['days']);
-
-                const year = response['year'];
-                const month = response['month'];
-                const days = response['days'];
-                
-                // var array_response = JSON.parse(response);
-
-                    var table_content = "";
-                    for (let i = 1 ; i <= days; i++) {
-                      const days_name = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                      const date_str = '"'+month+'/'+i+'/'+ year+'"'; // mm/dd/yyyy
-                      const date_obj = new Date(date_str);
-                      const day_name = days_name[date_obj.getDay()];
-                      
-                      // for (let e = 0 ; e < days; e++) {
-                        if (day_name == 'Sun' ||day_name == 'Sat' ){
-                          table_content += '<tr style="background-color: #d3d3d3;">';
-                        } else {
-                          table_content += '<tr>';
-                        }
-
-                        table_content += '<th>' + i + '</th>'
-                        table_content += '<td></td>'
-                        table_content += '<td></td>'
-                        table_content += '<td></td>'
-                        table_content += '<td></td>'
-                        table_content += '<td style="text-align: center";>'+day_name+'</td>'
-                        table_content += '<td></td>'
-                        table_content += '</tr>';
-                      // }
-                    }
-                    document.getElementById("table-body").innerHTML = table_content;
-                
-              },
-              error: function (request, status, error) {
-                alert(request.responseText);
-              }
-            });
-          });
-
           $("#year").change(function(){
-            // const days_name = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            // const date_str = "06/03/2023"; // mm/dd/yyyy
-            // const date_obj = new Date(date_str);
-            // const day_name = days_name[date_obj.getDay()];
-            console.log(day_name);
-            // alert($('#year').val());
+            alert($('#year').val());
           });
 
           $('#timeInOutModal').on('hidden.bs.modal', function () {

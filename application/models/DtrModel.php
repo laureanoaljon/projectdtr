@@ -58,7 +58,7 @@ class DtrModel extends CI_Model
                             $message = "Time in successfully (PM)";
                         }
                     } else {
-                        $message = "Unable to punch time records!";
+                        $message = nl2br("Unable to punch time record!\r\n &emsp;&#8226; AM time-in is before 11am only \r\n &emsp;&#8226; PM time-in is between 11AM to 4PM only");
                     }
                 } else {
                     $message = "Okay for today";
@@ -99,8 +99,10 @@ class DtrModel extends CI_Model
                         } else {
                             $message = "Already time out (PM)";
                         }
-                    } else {
-                        $message = "Unable to punch time records!";
+                    } else if ($current_time < date('H:i:s', strtotime('09:00'))){ 
+                        $message = nl2br("Unable to punch time record!\r\n &emsp;&#8226; AM time-out is between 9AM to 1PM only \r\n &emsp;&#8226; PM time-out is 2PM onwards");
+                    } else if ($current_time > date('H:i:s', strtotime('13:00')) && $current_time < date('H:i:s', strtotime('14:00'))){ 
+                        $message = nl2br("Unable to punch time record!\r\n &emsp;&#8226; AM time-out is between 9AM to 1PM only \r\n &emsp;&#8226; PM time-out is 2PM onwards");
                     }
                 }  else  {
                     $message = "Okay for today";
@@ -114,13 +116,13 @@ class DtrModel extends CI_Model
                         $this->db->query("insert into time_records set employee_db_id='$employee_db_id', pm_time_in ='$current_time', date='$current_date', image='$image'");  
                         $message = "Time in successfully (PM)";
                     } else {
-                        $message = "Unable to punch time records!";
+                        $message = nl2br("Unable to punch time record!\r\n &emsp;&#8226; AM time-in is before 11am only \r\n &emsp;&#8226; PM time-in is between 11AM to 4PM only");
                     }
                 } else if ($current_time < date('H:i:s', strtotime('11:00'))){
                     $this->db->query("insert into time_records set employee_db_id='$employee_db_id', am_time_in ='$current_time', date='$current_date', image='$image'");  
                     $message = "Time in successfully (AM)";
                 } else {
-                    $message = "Lunch break hours";
+                    $message = nl2br("Unable to punch time record!\r\n &emsp;&#8226; Lunch break hours");
                 }
             } else {
                 if ($current_time > date('H:i:s', strtotime('9:00')) && $current_time < date('H:i:s', strtotime('13:00'))){
