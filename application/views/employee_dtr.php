@@ -344,7 +344,7 @@
     //             + (currentdate.getMonth()+1)  + "/" 
     //             + currentdate.getFullYear() + " @ "  
     //             + currentdate.getHours() + ":"  
-    //             + currentdate.getMinutes() + ":" 
+    //             + currentdate.getMinutes() + ":"
     //             + currentdate.getSeconds();
 
         
@@ -392,11 +392,12 @@
                 minute = "0"+minute;
             }
             var time_in = hour+":"+minute+" "+ampm;
+            
 
             var month = $('#select_month_timein').val();
             var day = $('#select_day_timein').val();
             var year = getProcessedDateTime();
-            var date_in = month+"/"+day+"/"+year;
+            var date_in = year+"-"+month+"-"+day;
             // alert(time_in);
             // alert(date_in);
             
