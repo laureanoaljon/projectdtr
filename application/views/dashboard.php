@@ -41,10 +41,10 @@
                   <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
                   <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
                   <?php if ($category != "employee"){?>
-                    <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR</a>
+                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
                     <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
-                    <a class="w-100 mr-2 text-white text-left" href="#" role="button">Active User Accounts</a>
-                    <a class="w-100 mr-2 text-white text-left" href="#" role="button">Archived User Accounts</a>
+                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
+                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
                   <?php } ?>
                   <a class="w-100 mr-2 text-white text-left" href="#" role="button" id="changePasswordBtn">Change Password</a>
                   <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/logout" role="button">Logout</a>
@@ -153,7 +153,7 @@
                             <?php for ($y = 0; $y < count($time_records); $y++) { ?> 
                               <?php if ($x == date('d', strtotime($time_records[$y]['date']))) { ?>
                                 <?php if ($day == "Sun" || $day == "Sat") {?>
-                                  <tr style="background-color: #d3d3d3;">
+                                  <tr style="background-color: #ededed;">
                                 <?php } else { ?>
                                   <tr>
                                 <?php } ?>
@@ -171,7 +171,7 @@
 
                             <?php if (!in_array($x, $test_arr)) { ?>
                               <?php if ($day == "Sun" || $day == "Sat") {?>
-                                <tr style="background-color: #d3d3d3;">
+                                <tr style="background-color: #ededed;">
                               <?php } else { ?>
                                 <tr>
                               <?php } ?>
@@ -432,39 +432,67 @@
                 year: year, 
               },
               success: function (response) {
-                console.log(response['days']);
+                // console.log(new Date(response['time_records'][1]['date']).getDate());
+                // console.log(response['time_records'][1]['date']);
 
                 const year = response['year'];
                 const month = response['month'];
                 const days = response['days'];
+                const time_records = response['time_records'];
+
+                const t_array = [];
                 
                 // var array_response = JSON.parse(response);
 
-                    var table_content = "";
-                    for (let i = 1 ; i <= days; i++) {
-                      const days_name = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                      const date_str = '"'+month+'/'+i+'/'+ year+'"'; // mm/dd/yyyy
-                      const date_obj = new Date(date_str);
-                      const day_name = days_name[date_obj.getDay()];
-                      
-                      // for (let e = 0 ; e < days; e++) {
+                var table_content = "";
+                for (let i = 1 ; i <= days; i++) {
+                  const days_name = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                  const date_str = '"'+month+'/'+i+'/'+ year+'"'; // mm/dd/yyyy
+                  const date_obj = new Date(date_str);
+                  const day_name = days_name[date_obj.getDay()];
+                  
+                  if (time_records.length > 0){
+                    for (let e = 0 ; e < time_records.length; e++) {
+                      if (i == new Date(response['time_records'][e]['date']).getDate()){  
                         if (day_name == 'Sun' ||day_name == 'Sat' ){
-                          table_content += '<tr style="background-color: #d3d3d3;">';
+                          table_content += '<tr style="background-color: #ededed;">';
                         } else {
                           table_content += '<tr>';
                         }
 
                         table_content += '<th>' + i + '</th>'
-                        table_content += '<td></td>'
-                        table_content += '<td></td>'
-                        table_content += '<td></td>'
-                        table_content += '<td></td>'
+                        table_content += '<td>'+ time_records[e]['am_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['am_time_out'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_out'] +'</td>'
                         table_content += '<td style="text-align: center";>'+day_name+'</td>'
                         table_content += '<td></td>'
                         table_content += '</tr>';
-                      // }
+
+                        t_array.push(i);
+                      }
                     }
-                    document.getElementById("table-body").innerHTML = table_content;
+                  }
+
+                  if (!t_array.includes(i)){
+                    if (day_name == 'Sun' ||day_name == 'Sat' ){
+                        table_content += '<tr style="background-color: #ededed;">';
+                      } else {
+                        table_content += '<tr>';
+                      }
+
+                      table_content += '<th>' + i + '</th>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td style="text-align: center";>'+day_name+'</td>'
+                      table_content += '<td></td>'
+                      table_content += '</tr>';
+                    }
+                  }
+                
+                document.getElementById("table-body").innerHTML = table_content;
                 
               },
               error: function (request, status, error) {
@@ -473,13 +501,87 @@
             });
           });
 
+          // Change year, change table value
           $("#year").change(function(){
-            // const days_name = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            // const date_str = "06/03/2023"; // mm/dd/yyyy
-            // const date_obj = new Date(date_str);
-            // const day_name = days_name[date_obj.getDay()];
-            console.log(day_name);
-            // alert($('#year').val());
+            var month = $('#month').val();
+            var year = $('#year').val();
+
+            $.ajax({
+              url: "<?php echo base_url(); ?>dtr/get_time_records",
+              method: 'POST',
+              dataType: "JSON",
+              data: {
+                month: month,
+                year: year, 
+              },
+              success: function (response) {
+                // console.log(new Date(response['time_records'][1]['date']).getDate());
+                // console.log(response['time_records'][1]['date']);
+
+                const year = response['year'];
+                const month = response['month'];
+                const days = response['days'];
+                const time_records = response['time_records'];
+
+                const t_array = [];
+                
+                // var array_response = JSON.parse(response);
+                
+                var table_content = "";
+                for (let i = 1 ; i <= days; i++) {
+                  const days_name = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                  const date_str = '"'+month+'/'+i+'/'+ year+'"'; // mm/dd/yyyy
+                  const date_obj = new Date(date_str);
+                  const day_name = days_name[date_obj.getDay()];
+                  
+                  if (time_records.length > 0){
+                    for (let e = 0 ; e < time_records.length; e++) {
+                      if (i == new Date(response['time_records'][e]['date']).getDate()){  
+                        if (day_name == 'Sun' ||day_name == 'Sat' ){
+                          table_content += '<tr style="background-color: #d3d3d3;">';
+                        } else {
+                          table_content += '<tr>';
+                        }
+
+                        table_content += '<th>' + i + '</th>'
+                        table_content += '<td>'+ time_records[e]['am_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['am_time_out'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_out'] +'</td>'
+                        table_content += '<td style="text-align: center";>'+day_name+'</td>'
+                        table_content += '<td></td>'
+                        table_content += '</tr>';
+
+                        t_array.push(i);
+                      }
+                    }
+                  }
+
+                  if (!t_array.includes(i)){
+                    if (day_name == 'Sun' ||day_name == 'Sat' ){
+                        table_content += '<tr style="background-color: #d3d3d3;">';
+                      } else {
+                        table_content += '<tr>';
+                      }
+
+                      table_content += '<th>' + i + '</th>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td style="text-align: center";>'+day_name+'</td>'
+                      table_content += '<td></td>'
+                      table_content += '</tr>';
+                    }
+                  }
+                
+                document.getElementById("table-body").innerHTML = table_content;
+                
+              },
+              error: function (request, status, error) {
+                alert(request.responseText);
+              }
+            });
           });
 
           $('#timeInOutModal').on('hidden.bs.modal', function () {

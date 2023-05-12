@@ -31,32 +31,32 @@
     <!-- Navigation --->
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebarView" sidebarjs>
-                <div class="content">
-                    <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-chevron-left"></i></div>
-                    <nav class="navbar flex-column mt-2 text-left">
-                        <h4 class="text-white text-left">Menu</h4>
-                        <a class="w-100 active mr-2 text-white text-left" href="#" role="button">Personal DTR</a>
-                        <a class="w-100 mr-2 text-white text-left" href="#" role="button">Personal DTR Analytics</a>
-                        <?php if ($category != "employee") { ?>
-                            <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR</a>
-                            <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
-                            <a class="w-100 mr-2 text-white text-left" href="#" role="button">Active User Accounts</a>
-                            <a class="w-100 mr-2 text-white text-left" href="#" role="button">Archived User Accounts</a>
-                        <?php } ?>
-                        <a class="w-100 mr-2 text-white text-left" href="#" role="button">Change Password</a>
-                        <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/logout" role="button">Logout</a>
-                    </nav>
-                </div>
+        <div id="sidebarView" sidebarjs>
+              <div class="content">
+                <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-chevron-left"></i></div>
+                <nav class="navbar flex-column mt-2 text-left">
+                  <h4 class="text-white text-left">Menu</h4>
+                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
+                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
+                  <?php if ($category != "employee"){?>
+                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
+                    <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
+                    <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
+                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
+                  <?php } ?>
+                  <a class="w-100 mr-2 text-white text-left" href="#" role="button" id="changePasswordBtn">Change Password</a>
+                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/logout" role="button">Logout</a>
+                </nav>
+              </div>
             </div>
-            <nav id="sidebarMenu" class="col d-md-block sidebar collapse">
-                <div class="sidebar-sticky pt-1">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-list"></i></div>
-                        </li>
-                    </ul>
-                </div>
+            <nav id="sidebarMenu" class="col d-md-block sidebar collapsed">
+              <div class="sidebar-sticky pt-1">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-list"></i></div>
+                    </li>
+                </ul>
+              </div>
             </nav>
 
 

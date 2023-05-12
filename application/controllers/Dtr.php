@@ -32,7 +32,7 @@ class Dtr extends CI_Controller {
                 $current_date = date('Y-m-d');
                 $current_time_formatted = date('HiA', strtotime($current_time));
 
-                $image_title = $employee_db_id . '_' . $current_time_formatted;
+                $image_title = $employee_db_id . '_' . date('Ymd') . '_' . $current_time_formatted;
 
                 $image = str_replace('data:image/png;base64,', '', $image);
                 // $image = str_replace(' ', '+', $image);
@@ -45,7 +45,7 @@ class Dtr extends CI_Controller {
                 // Pagkuha ng image using path, para masave sa database
                 $imagessss = addslashes(file_get_contents('./assets/'.$image_title.'.png'));
 
-                $result = $this->dtrmodel->save_time_in_out($employee_db_id, date('H:i:s', strtotime('17:26')), $current_date, $type, $imagessss);
+                $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type, $imagessss);
 
                 echo json_encode($result);
 	}
