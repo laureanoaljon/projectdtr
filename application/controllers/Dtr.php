@@ -45,7 +45,16 @@ class Dtr extends CI_Controller {
                 // Pagkuha ng image using path, para masave sa database
                 $imagessss = addslashes(file_get_contents('./assets/'.$image_title.'.png'));
 
-                $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type, $imagessss);
+                // check image kung nasave sa assets folder
+                if (file_exists('./assets/'.$image_title.'.png')) {
+                        // Save punch time
+                        $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type, $imagessss);
+
+                        // Delete image
+                        unlink('./assets/'.$image_title.'.png');
+                } else {
+                        $result = "File does not exists";  
+                }
 
                 echo json_encode($result);
 	}

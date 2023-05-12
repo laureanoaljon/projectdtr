@@ -122,4 +122,88 @@ class Main extends CI_Controller {
  
 		echo json_encode($respose);
     }
+
+    public function print_dtr_table(){
+        date_default_timezone_set('Asia/Manila');
+
+        // $month = $this->input->post('month');
+        // $year = $this->input->post('year');
+
+        $month = $this->uri->segment(3);
+        $year = $this->uri->segment(4);
+
+        $year = date("Y", strtotime(''.$year.'-'.$month.''));
+        $month = date("m", strtotime(''.$year.'-'.$month.''));
+        
+        $data['year'] = $year;
+        $data['month'] = $month;
+        $data['days'] = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+        $employee_id = $_SESSION['user']['db_id'];
+        $data['employee_id'] = $_SESSION['user']['employee_id'];
+        $data['first_name'] = $_SESSION['user']['f_name'];
+        $data['last_name'] = $_SESSION['user']['s_name'];
+
+        $selected_year_month = date("Y-m", strtotime(''.$year.'-'.$month.''));
+
+        $data['time_records'] = $this->dtrmodel->get_time_records($employee_id, $selected_year_month);
+
+        $this->load->view('dtr_table_pdf', $data);
+
+        $html = $this->output->get_output();
+
+        $this->load->library('pdf');
+
+        $this->dompdf->loadHtml($html);
+
+        $this->dompdf->setPaper('A4', 'landscape');
+
+        $this->dompdf->render();
+
+        $this->dompdf->stream('dtr_table.pdf', array('Attachment'=>0));
+
+        echo json_encode("Success!");
+	}
+
+    public function print_dtr_form(){
+        date_default_timezone_set('Asia/Manila');
+
+        // $month = $this->input->post('month');
+        // $year = $this->input->post('year');
+
+        $month = $this->uri->segment(3);
+        $year = $this->uri->segment(4);
+
+        $year = date("Y", strtotime(''.$year.'-'.$month.''));
+        $month = date("m", strtotime(''.$year.'-'.$month.''));
+        
+        $data['year'] = $year;
+        $data['month'] = $month;
+        $data['days'] = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+        $employee_id = $_SESSION['user']['db_id'];
+        $data['employee_id'] = $_SESSION['user']['employee_id'];
+        $data['first_name'] = $_SESSION['user']['f_name'];
+        $data['last_name'] = $_SESSION['user']['s_name'];
+
+        $selected_year_month = date("Y-m", strtotime(''.$year.'-'.$month.''));
+
+        $data['time_records'] = $this->dtrmodel->get_time_records($employee_id, $selected_year_month);
+
+        $this->load->view('dtr_form_pdf', $data);
+
+        $html = $this->output->get_output();
+
+        $this->load->library('pdf');
+
+        $this->dompdf->loadHtml($html);
+
+        $this->dompdf->setPaper('A4', 'portrait');
+
+        $this->dompdf->render();
+
+        $this->dompdf->stream('dtr_form.pdf', array('Attachment'=>0));
+
+        echo json_encode("Success!");
+	}
 }
