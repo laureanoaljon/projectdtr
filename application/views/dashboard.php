@@ -113,8 +113,8 @@
                         </div>
 
                         <div class="col-4">
-											    <button class="btn btn-secondary" type="button" id="printDtrTable">Print DTR Table</button>
-                          <button class="btn btn-secondary" type="button" id="printDtrForm">Print DTR Form</button>
+                          <a class="btn btn-secondary" href="<?php echo base_url(); ?>main/print_dtr_table/<?php echo $month; ?>/<?php echo $year; ?>" role="button" id="printDtrTable" target="_blank">Print DTR Table</a>
+                          <a class="btn btn-secondary" href="<?php echo base_url(); ?>main/print_dtr_form/<?php echo $month; ?>/<?php echo $year; ?>" role="button" id="printDtrForm" target="_blank">Print DTR Form</a>
                         </div>
 
                         <div class="col-2 text-right">
@@ -128,7 +128,7 @@
                 <div class="col-md-12">
                   <div class="col-md-12 mt-4 ml-2">
                     <!-- Table -->
-                    <table class="table table-bordered" style="background-color: #fff;">
+                    <table class="table table-bordered border-dark" style="background-color: #fff;">
                       <thead style="background-color: #D3D3D3;">
                         <tr>
                           <th scope="col" rowspan="2" style="width: 5%;  vertical-align: middle;">Date</th>
@@ -240,6 +240,12 @@
           </div>
           <div class="modal-body">
             <p id="messageDtr"></p>
+
+            <div class="row mt-4 mb-2">
+              <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal" aria-hidden="true">Okay</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -257,6 +263,12 @@
           </div>
           <div class="modal-body">
             <p id="errorPtag"></p>
+
+            <div class="row mt-4 mb-2">
+              <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal" aria-hidden="true">Okay</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -505,6 +517,12 @@
           $("#year").change(function(){
             var month = $('#month').val();
             var year = $('#year').val();
+            var base_url = '<?php echo base_url() ?>';
+            alert(base_url);
+
+            // href="<?php echo base_url(); ?>main/print_dtr_table/<?php echo $month; ?>/<?php echo $year; ?>"
+
+            $("a#printDtrTable").attr("href", '"'+ base_url +'/main/print_dtr_table/'+ month +'/'+ year +'"')
 
             $.ajax({
               url: "<?php echo base_url(); ?>dtr/get_time_records",
@@ -751,6 +769,30 @@
               });
             } 
           });
+
+          // $("#printDtrTable").click(function(){
+          //   var flag = 0;
+          //   var year = $('#year').val();
+          //   var month =  $('#month').val();
+
+          //   if (flag == 0) {
+          //     $.ajax({
+          //     url: "<?php echo base_url(); ?>main/print_dtr_table",
+          //     method: 'POST',
+          //     dataType: "JSON",
+          //     data: {
+          //       year: year,
+          //       month: month,
+          //     },
+          //     success: function (response) {
+          //       console.log(response);
+          //     },
+          //     error: function (request, status, error) {
+          //       alert(request.responseText);
+          //     }
+          //     });
+          //   } 
+          // });
 
         });
     </script>
