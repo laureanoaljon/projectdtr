@@ -132,6 +132,47 @@
                 </div> -->
 
 
+                <div class="modal fade" id="reviveuserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Revive account?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="revivebtn_modal">Revive</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="deleteuserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete account?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="deletebtn_modal">Delete</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
 
 
               
@@ -178,6 +219,9 @@
                                         ?>
                                     </tbody>
                                 </table>
+                                
+                                <input type="hidden" id="currently_selecteduser_revive">
+                                <input type="hidden" id="currently_selecteduser_delete">
 
 
 
@@ -201,43 +245,111 @@
     <script>
         var sidebarjs = new SidebarJS.SidebarElement();
 
+
+        function getArchiveUserAccounts() {
+                $.ajax({
+                    url: '<?php echo base_url(); ?>/get-archiveaccounts',
+                    type: 'POST',
+                    data: {
+                        emp_dbid: "none"
+                    },
+                    error: function() {
+                        alert('Something went wrong upon the data request.');
+                    },
+                    success: function(data) {
+                        var array_response = JSON.parse(data);
+
+                        //console.log(array_response);
+                        var table_content = "";
+                        for (let i = 0; i < array_response.length; i++) {
+                            var j = i + 1;
+                            table_content += '<tr>';
+                            table_content += '<td>' + j + '</td>'
+                            table_content += '<td>' + array_response[i].employee_id + '</td>'
+                            table_content += '<td>' + array_response[i].s_name + '</td>'
+                            table_content += '<td>' + array_response[i].f_name + '</td>'
+                            table_content += '<td>' + array_response[i].category + '</td>'
+                            table_content += '<td><input type="button" value="Revive" onclick="reviveaccount(' + array_response[i].db_id + ')"><input type="button" value="Delete" onclick="deleteaccount(' + array_response[i].db_id + ')"></td>';
+                            table_content += '</tr>';
+
+                        }
+                        //console.log(array_response);
+                        document.getElementById("table_body").innerHTML = table_content;
+                    }
+                });
+            }
+
+
+        function reviveaccount(emp_dbid) {
+            $('#currently_selecteduser_revive').val(emp_dbid);
+
+            $('#reviveuserModal').modal('show');
+            
+        };
+
+
+
+          $("#revivebtn_modal").click(function() {
+
+                var db_id = $('#currently_selecteduser_revive').val();
+                
+               $.ajax({
+                url: '<?php echo base_url(); ?>/revive-user',
+                type: 'POST',
+                data: {
+                    db_id:db_id
+            },
+                error: function() {
+                    alert('Something went wrong upon the data request.');
+                },
+                success: function(data) {
+                    var array_response = JSON.parse(data);
+                    alert(array_response);
+
+                    if (array_response == "User Account revived") {
+                        getArchiveUserAccounts();
+                        $('#reviveuserModal').modal('hide');
+                    }
+
+                }
+            });
+            });
       
 
-        $(document).ready(function() {
+        
+        function deleteaccount(emp_dbid) {
+            $('#currently_selecteduser_delete').val(emp_dbid);
 
+            $('#deleteuserModal').modal('show');
+            
+        };
 
-            // function getActiveUserAccounts() {
-            //     $.ajax({
-            //         url: '<php echo base_url(); ?>/get-activeaccounts',
-            //         type: 'POST',
-            //         data: {
-            //             emp_dbid: "none"
-            //         },
-            //         error: function() {
-            //             alert('Something went wrong upon the data request.');
-            //         },
-            //         success: function(data) {
-            //             var array_response = JSON.parse(data);
+        $("#deletebtn_modal").click(function() {
 
-            //             //console.log(array_response);
-            //             var table_content = "";
-            //             for (let i = 0; i < array_response.length; i++) {
-            //                 var j = i + 1;
-            //                 table_content += '<tr>';
-            //                 table_content += '<td>' + j + '</td>'
-            //                 table_content += '<td>' + array_response[i].employee_id + '</td>'
-            //                 table_content += '<td>' + array_response[i].s_name + '</td>'
-            //                 table_content += '<td>' + array_response[i].f_name + '</td>'
-            //                 table_content += '<td>' + array_response[i].category + '</td>'
-            //                 table_content += '<td><input type="button" value="Edit" onclick="editaccount(' + array_response[i].db_id + ')"><input type="button" value="Manage Face Recognition" onclick="manageFaceReco(' + array_response[i].db_id + ')"></td>';
-            //                 table_content += '</tr>';
+            var db_id = $('#currently_selecteduser_delete').val();
 
-            //             }
-            //             //console.log(array_response);
-            //             document.getElementById("table_body").innerHTML = table_content;
-            //         }
-            //     });
-            // }
+            $.ajax({
+            url: '<?php echo base_url(); ?>/delete-user',
+            type: 'POST',
+            data: {
+                db_id:db_id
+            },
+            error: function() {
+                alert('Something went wrong upon the data request.');
+            },
+            success: function(data) {
+                var array_response = JSON.parse(data);
+                alert(array_response);
+
+                if (array_response == "User Account deleted") {
+                    getArchiveUserAccounts();
+                    $('#deleteuserModal').modal('hide');
+                }
+            }
+            });
+        });
+
+            
 
 
           
@@ -281,7 +393,7 @@
             //     });
             // });
 
-        });
+    
 
       
     </script>

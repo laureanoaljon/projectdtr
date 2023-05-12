@@ -75,5 +75,24 @@ class ArchiveUserAccount extends CI_Controller{
         //     echo json_encode($result);
         // }
 
+
+        public function reviveUserAccount(){
+            
+            $result = $this->acctman->reviveUserAccount($this->input->post('db_id'));
+            echo json_encode($result);
+        }
     
+        
+        public function getArchiveUserAccounts(){
+
+            $active_accounts = $this->acctman->getArchivedUserAccounts();
+            echo json_encode($active_accounts);
+    
+        }
+
+        public function deleteUserAccount(){
+            
+            $result = $this->acctman->deleteUserAccount($this->input->post('db_id'));
+            echo json_encode($result);
+        }
 }

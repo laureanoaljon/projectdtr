@@ -70,5 +70,25 @@ class AccountManagementModel extends CI_Model{
         return $query->result();
     }
 
+    function reviveUserAccount($db_id){
+       
+        $this->db->set('is_active', 1);
+        $this->db->where('db_id', $db_id);
+        $this->db->update('employee'); // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
+
+        
+        return "User Account revived";
+
+    }
+
+    function deleteUserAccount($db_id){
+
+        $this->db->delete('employee', array('db_id' => $db_id));
+       
+
+        return "User Account deleted";
+
+    }
+
 
 }

@@ -60,3 +60,6 @@ $route['get-activeaccounts']['post'] = 'activeuseraccount/getActiveUserAccounts'
 $route['get-accountdata']['post'] = 'activeuseraccount/getAccountData';
 $route['edit-userdata']['post'] = 'activeuseraccount/editUserAccount';
 $route['archive-user']['post'] = 'activeuseraccount/archiveUserAccount';
+$route['revive-user']['post'] = 'archiveuseraccount/reviveUserAccount';
+$route['get-archiveaccounts']['post'] = 'archiveuseraccount/getArchiveUserAccounts';
+$route['delete-user']['post'] = 'archiveuseraccount/deleteUserAccount';
