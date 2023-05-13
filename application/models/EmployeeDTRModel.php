@@ -132,4 +132,17 @@ class EmployeeDTRModel extends CI_Model{
         }
     }
 
+
+    public function get_time_records($employee_id, $current_date){
+        $this->db->select('*');
+        $this->db->from('time_records');
+        $this->db->where('employee_db_id', $employee_id);
+        $this->db->like('date', $current_date);
+        
+        $query = $this->db->get();
+        $records = $query->result_array();
+
+        return $records;
+    }
+
 }

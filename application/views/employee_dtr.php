@@ -277,25 +277,25 @@
                     </div>
                     <!-- Variety Group -->
                     <div class="row mt-3 ml-5 mr-4">
-                        <div class="col-5">
+                    <div class="col-5">
                             <!-- Month -->
-                            <select id="month" name="month" class="border rounded pass-label" style="text-align-last: center; height: 40px; width: 150px;" data-live-search="true">
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
+                            <select id="select_month" name="month" class="border rounded pass-label" style="text-align-last: center; height: 40px; width: 150px;" data-live-search="true">
+                                <option value="01" <?php if ($month == '01'){  echo "selected"; } ?>>January</option>
+                                <option value="02" <?php if ($month == '02'){  echo "selected"; } ?>>February</option>
+                                <option value="03" <?php if ($month == '03'){  echo "selected"; } ?>>March</option>
+                                <option value="04" <?php if ($month == '04'){  echo "selected"; } ?>>April</option>
+                                <option value="05" <?php if ($month == '05'){  echo "selected"; } ?>>May</option>
+                                <option value="06" <?php if ($month == '06'){  echo "selected"; } ?>>June</option>
+                                <option value="07" <?php if ($month == '07'){  echo "selected"; } ?>>July</option>
+                                <option value="08" <?php if ($month == '08'){  echo "selected"; } ?>>August</option>
+                                <option value="09" <?php if ($month == '09'){  echo "selected"; } ?>>September</option>
+                                <option value="10" <?php if ($month == '10'){  echo "selected"; } ?>>October</option>
+                                <option value="11" <?php if ($month == '11'){  echo "selected"; } ?>>November</option>
+                                <option value="12" <?php if ($month == '12'){  echo "selected"; } ?>>December</option>
                             </select>
 
                             <!-- Year -->
-                            <select id="year" name="year" class="border rounded pass-label" data-live-search="true" style="text-align-last: center; height: 40px; width: 100px;">
+                            <select id="select_year" name="year" class="border rounded pass-label" data-live-search="true" style="text-align-last: center; height: 40px; width: 100px;">
                                 <option value="<?php echo date("Y"); ?>"><?php echo date("Y"); ?></option>
                                 <option value="<?php echo date("Y") - 1; ?>"><?php echo date("Y") - 1; ?></option>
                                 <option value="<?php echo date("Y") - 2; ?>"><?php echo date("Y") - 2; ?></option>
@@ -364,7 +364,118 @@
         var sidebarjs = new SidebarJS.SidebarElement();
 
 
+        function getEmployeesDtrPerMonth(){
+            var slected_month = $('#select_month').val();
+            var slected_year = $('#select_year').val();
+
+            var base_url = '<?php echo base_url() ?>';
+
+            // $("a#printDtrForm").attr("href", base_url + "main/print_dtr_form/" + month + "/" + year)
+            // $("a#printDtrTable").attr("href", base_url + "main/print_dtr_table/" + month + "/" + year)
+
+            var selected_employee = $('#select_employee').val();
+            $.ajax({
+              url: "<?php echo base_url(); ?>employeedtr/get_time_records",
+              method: 'POST',
+              dataType: "JSON",
+              data: {
+                month: slected_month,
+                year: slected_year, 
+                emp_dbid:selected_employee
+              },
+              success: function (response) {
+                // console.log(new Date(response['time_records'][1]['date']).getDate());
+                // console.log(response['time_records'][1]['date']);
+
+                const year = response['year'];
+                const month = response['month'];
+                const days = response['days'];
+                const time_records = response['time_records'];
+
+                 const t_array = [];
+
+                  const d_temp = new Date(slected_month+"/1/"+slected_year);
+                  let day_temp = d_temp.getDay();
+            
+                
+                
+                // var array_response = JSON.parse(response);
+
+                var table_content = "";
+                const days_name = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                for (let i = 1 ; i <= days; i++) {
+                  
+                  const date_str = '"'+month+'/'+i+'/'+ year+'"'; // mm/dd/yyyy
+                  const date_obj = new Date(date_str);
+                //   const day_name = days_name[date_obj.getDay()];
+                if(day_temp == 7)
+                    day_temp = 0;
+                const day_name = days_name[day_temp];
+                day_temp++;
+                  
+                  if (time_records.length > 0){
+                    for (let e = 0 ; e < time_records.length; e++) {
+                      if (i == new Date(response['time_records'][e]['date']).getDate()){  
+                        if (day_name == 'Sun' ||day_name == 'Sat' ){
+                          table_content += '<tr style="background-color: #ededed;">';
+                        } else {
+                          table_content += '<tr>';
+                        }
+
+                        table_content += '<th>' + i + '</th>'
+                        table_content += '<td>'+ time_records[e]['am_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['am_time_out'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_out'] +'</td>'
+                        table_content += '<td style="text-align: center";>'+day_name+'</td>'
+                        table_content += '<td></td>'
+                        table_content += '</tr>';
+
+                        t_array.push(i);
+                      }
+                    }
+                  }
+
+                  if (!t_array.includes(i)){
+                    if (day_name == 'Sun' ||day_name == 'Sat' ){
+                        table_content += '<tr style="background-color: #ededed;">';
+                      } else {
+                        table_content += '<tr>';
+                      }
+
+                      table_content += '<th>' + i + '</th>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td style="text-align: center";>'+day_name+'</td>'
+                      table_content += '<td></td>'
+                      table_content += '</tr>';
+                    }
+                  }
+                
+                document.getElementById("table_body").innerHTML = table_content;
+                
+              },
+              error: function (request, status, error) {
+                alert(request.responseText);
+              }
+            });
+        }
+
+         // Change month, change table value
+         $("#select_month").change(function(){
+                getEmployeesDtrPerMonth();
+          });
+
+          $("#select_year").change(function(){
+                getEmployeesDtrPerMonth();
+          });
+
+
         function getEmployeeDTR(emp_dbid){
+
+
             $.ajax({
             url: '<?php echo base_url(); ?>/get-empdtr',
             type: 'POST',
@@ -407,7 +518,7 @@
         else{
             document.getElementById("timein_btn").disabled = false;
             document.getElementById("timeout_btn").disabled = false;
-            getEmployeeDTR(selected_employee);
+            getEmployeesDtrPerMonth();
         }
             
     });
@@ -537,7 +648,8 @@
                     var array_response = JSON.parse(data);
                     alert(array_response);
                     $('#timein_modal').modal('hide');
-                    getEmployeeDTR(selected_employee);
+                    // getEmployeeDTR(selected_employee);
+                    getEmployeesDtrPerMonth();
             }
             });
         }
@@ -604,7 +716,8 @@
                 var array_response = JSON.parse(data);
                 alert(array_response);
                 $('#timeout_modal').modal('hide');
-                getEmployeeDTR(selected_employee);
+                // getEmployeeDTR(selected_employee);
+                getEmployeesDtrPerMonth();
         }
         });
     }
