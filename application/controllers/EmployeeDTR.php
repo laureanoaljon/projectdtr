@@ -42,7 +42,26 @@ class EmployeeDTR extends CI_Controller{
         
         $time_in_24_hour_format  = date("H:i", strtotime($this->input->post('time_in')));
 
-        $emp_dtr = $this->empdtr->insertTimeInData($this->input->post('emp_dbid'), $time_in_24_hour_format, $this->input->post('date_in'));
+        $emp_dtr = $this->empdtr->insertTimeInData($this->input->post('emp_dbid'), $time_in_24_hour_format, $this->input->post('date_in'), $this->input->post('time_in_mode'));
+
+        // $response1 = $chartmap2data->categ1;
+        // $response2 =  $chartmap2data->map1data_jsonstring;
+        // $ajaxresponse = array($response1, $response2);
+        //$ajaxresponse = "time_in:".$data['test'];
+
+        //$this->input->post('emp_dbid').",". $this->input->post('time_in').",". $this->input->post('date_in')
+        echo json_encode($emp_dtr);
+
+        //echo $response1;
+
+
+    }
+
+    public function insertTimeOutData(){
+        
+        $time_in_24_hour_format  = date("H:i", strtotime($this->input->post('time_out')));
+
+        $emp_dtr = $this->empdtr->insertTimeOutData($this->input->post('emp_dbid'), $time_in_24_hour_format, $this->input->post('date_in'), $this->input->post('time_out_mode'));
 
         // $response1 = $chartmap2data->categ1;
         // $response2 =  $chartmap2data->map1data_jsonstring;
