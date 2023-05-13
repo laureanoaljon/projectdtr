@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard</title>
+    <title>Analytics</title>
     <meta name="description" content="Main Page">
     <?php 
             echo link_tag('css/bootstrap-reboot.min.css');
@@ -16,6 +16,10 @@
     ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2XBB2166Q"></script>
+
+    <!-- Import Chart.js library
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
     
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" integrity="sha512-PIAUVU8u1vAd0Sz1sS1bFE5F1YjGqm/scQJ+VIUJL9kNa8jtAWFUDMu5vynXPDprRRBqHrE8KKEsjA7z22J1FA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" integrity="sha512-xnwMSDv7Nv5JmXb48gKD5ExVOnXAbNpBWVAXTo9BJWRJRygG8nwQI81o5bYe8myc9kiEF/qhMGPjkSsF06hyHA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -132,7 +136,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Workdays</h5>
-                                                <p class="card-text" style="font-size: 40px;">23</p>
+                                                <p class="card-text" style="font-size: 40px;" id="workDays"><?php echo $workdays_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -142,7 +146,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Present</h5>
-                                                <p class="card-text" style="font-size: 40px;">20</p>
+                                                <p class="card-text" style="font-size: 40px;" id="presentDays"><?php echo $present_days_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -152,7 +156,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Absent</h5>
-                                                <p class="card-text" style="font-size: 40px;">3</p>
+                                                <p class="card-text" style="font-size: 40px;" id="absentDays"><?php echo $workdays_count - $present_days_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +166,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Tardy</h5>
-                                                <p class="card-text" style="font-size: 40px;">1</p>
+                                                <p class="card-text" style="font-size: 40px;" id="tardyDays"><?php echo $tardy_days_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +176,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Undertime</h5>
-                                                <p class="card-text" style="font-size: 40px; ">0</p>
+                                                <p class="card-text" style="font-size: 40px;" id="undertimeDays"><?php echo $undertime_days_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +186,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Overtime</h5>
-                                                <p class="card-text" style="font-size: 40px;">2</p>
+                                                <p class="card-text" style="font-size: 40px;" id="overtimeDays"><?php echo $overtime_days_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +196,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Half-day</h5>
-                                                <p class="card-text" style="font-size: 40px;">0</p>
+                                                <p class="card-text" style="font-size: 40px;" id="halfDays"><?php echo $half_days_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +210,6 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5>Yearly Summary</h5>
-                                <p>in number of days</p>
 
                                 <div class="row px-2">
                                     <div class="col-lg">
@@ -214,7 +217,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Present</h5>
-                                                <p class="card-text" style="font-size: 40px;">270</p>
+                                                <canvas id="presentChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -224,7 +227,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Absent</h5>
-                                                <p class="card-text" style="font-size: 40px;">5</p>
+                                                <canvas id="absentChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -236,7 +239,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Tardy</h5>
-                                                <p class="card-text" style="font-size: 40px;">3</p>
+                                                <canvas id="tardyChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -246,7 +249,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Undertime</h5>
-                                                <p class="card-text" style="font-size: 40px;">5</p>
+                                                <canvas id="undertimeChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -258,7 +261,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Overtime</h5>
-                                                <p class="card-text" style="font-size: 40px;">10</p>
+                                                <canvas id="overtimeChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -268,7 +271,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Half-day</h5>
-                                                <p class="card-text" style="font-size: 40px;">6</p>
+                                                <canvas id="halfdayChart"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -279,51 +282,6 @@
                 </div>           
             </main>
         </div>
-    </div>
-
-    <!-- Loading Modal 
-    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered text-center" role="document">
-          <div class="col-md-12 d-flex justify-content-center text-white text-center">
-              <span style="font-size: 20px; color: #FFFFFF;">
-                  <i class="fa fa-spinner fa-spin fa-3x w-100" aria-hidden="true"></i>
-              </span>
-          </div>
-      </div>        
-    </div> -->
-
-    <!-- DTR message modal -->
-    <div class="modal fade" id="dtrMessageModal" tabindex="-1" aria-labelledby="dtrMessageModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: transparent">
-            <h4 class="modal-title" id="exampleModalLabel"><b>Message</b></h4>
-            <button type="button" class="close" aria-label="Close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p id="messageDtr"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-white" style="background-color: red">
-            <h4 class="modal-title" id="exampleModalLabel"><b>Error</b></h4>
-            <button type="button" class="close" aria-label="Close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p id="errorPtag"></p>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- Change Password Modal -->
@@ -375,214 +333,231 @@
       </div>
     </div>
 
-    <!-- TimeIn TimeOut Modal -->
-    <div class="modal fade" id="timeInOutModal" tabindex="-1" aria-labelledby="timeInModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: transparent">
-            <h3 class="modal-title" id="modal-title"><b></b></h3>
-            <button type="button" class="close" aria-label="Close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="time_in" method="POST">
-              <div class="form-row">
-                <div class="col-md-12 mb-2">
-                  <input type="text" class="form-control" name="current_time" value=<?php echo date("h:i:sa"); ?> id="current_time" style='font-size: 20px;' readonly>  
-                </div>
-                <div class='mt-2 px-2'>
-                  <video id="video" width="100%" height="auto"></video>
-                </div>
-                <div class='mt-2 px-2'>
-                  <img id="captured-image" width="100%" height="auto" alt="">
-                </div>
-              </div>
-            </form>
-            
-            <!-- Type -->
-            <span id="type-in-out" hidden></span>
-            <!-- Type -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="captureTimeInBtn">Capture</button>
-            <button type="button" class="btn btn-secondary" id="confirmTimeInBtn">Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- <script>
-      var video = document.querySelector("#video");
-      var canvas = document.createElement("canvas");
-      var context = canvas.getContext("2d");
-
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function(stream) {
-          video.srcObject = stream;
-          video.play();
-        })
-        .catch(function(err) {
-          console.log("An error occurred: " + err);
-        });
-
-      document.querySelector("#captureTimeInBtn").addEventListener("click", function() {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var dataUrl = canvas.toDataURL();
-        document.querySelector("#captured-image").setAttribute("src", dataUrl);
-
-        document.getElementById('video').style.display = 'none';
-        document.getElementById('captureTimeInBtn').disabled = true;
-      });
-
-      // $('#imageModal').on('hidden.bs.modal', function (e) {
-      //   video.srcObject.getTracks()[0].stop();
-      // });
-    </script> -->
-
-    <!-- Video Preview -->
-    <!-- <script>
-      var video = document.querySelector("#video");
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function(stream) {
-          video.srcObject = stream;
-          video.play();
-        })
-        .catch(function(err) {
-          console.log("An error occurred: " + err);
-        });
-
-      $('#cameraModal').on('hidden.bs.modal', function (e) {
-        video.srcObject.getTracks()[0].stop();
-      });
-    </script> -->
-
+                      
     <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/sidebarjs.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/chart.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>js/custom.js"></script>
+
+    <script>
+      //////////////////// For Present Bar Chart //////////////////////////////
+      // Get the canvas element
+      const ctxPresent = document.getElementById('presentChart').getContext('2d');
+
+      // Define the data
+      const dataPresent = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [{
+          label: 'Monthly Data',
+          data: [23, 23, 20, 22, 23, 20, 20, 23, 23, 20, 23, 19],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      // Configure the options
+      const optionsPresent = {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      // Create the chart
+      const presentChart = new Chart(ctxPresent, {
+        type: 'bar',
+        data: dataPresent,
+        options: optionsPresent
+      });
+
+      //////////////////// For Absent Bar Chart //////////////////////////////
+      // Get the canvas element
+      const ctxAbsent = document.getElementById('absentChart').getContext('2d');
+
+      // Define the data
+      const dataAbsent = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [{
+          label: 'Monthly Data',
+          data: [0, 2, 2, 3, 0, 1, 0, 2, 2, 5, 1, 4],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      // Configure the options
+      const optionsAbsent = {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      // Create the chart
+      const absentChart = new Chart(ctxAbsent, {
+        type: 'bar',
+        data: dataAbsent,
+        options: optionsAbsent
+      });
+
+      //////////////////// For Tardy Bar Chart //////////////////////////////
+      // Get the canvas element
+      const ctxTardy = document.getElementById('tardyChart').getContext('2d');
+
+      // Define the data
+      const dataTardy = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [{
+          label: 'Monthly Data',
+          data: [1, 2, 1, 3, 1, 1, 0, 2, 2, 3, 1, 2],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      // Configure the options
+      const optionsTardy = {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      // Create the chart
+      const tardyChart = new Chart(ctxTardy, {
+        type: 'bar',
+        data: dataTardy,
+        options: optionsTardy
+      });
+
+      //////////////////// For Undertime Bar Chart //////////////////////////////
+      // Get the canvas element
+      const ctxUndertime = document.getElementById('undertimeChart').getContext('2d');
+
+      // Define the data
+      const dataUndertime = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [{
+          label: 'Monthly Data',
+          data: [0, 1, 1, 2, 0, 1, 0, 2, 1, 2, 0, 5],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      // Configure the options
+      const optionsUndertime = {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      // Create the chart
+      const undertimeChart = new Chart(ctxUndertime, {
+        type: 'bar',
+        data: dataUndertime,
+        options: optionsUndertime
+      });
+
+      //////////////////// For Overtime Bar Chart //////////////////////////////
+      // Get the canvas element
+      const ctxOvertime = document.getElementById('overtimeChart').getContext('2d');
+
+      // Define the data
+      const dataOvertime = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [{
+          label: 'Monthly Data',
+          data: [0, 0, 1, 3, 0, 1, 0, 2, 1, 2, 0, 4],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      // Configure the options
+      const optionsOvertime = {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      // Create the chart
+      const overtimeChart = new Chart(ctxOvertime, {
+        type: 'bar',
+        data: dataOvertime,
+        options: optionsOvertime
+      });
+
+      //////////////////// For HalfDay Bar Chart //////////////////////////////
+      // Get the canvas element
+      const ctxHalfday = document.getElementById('halfdayChart').getContext('2d');
+
+      // Define the data
+      const dataHalfday = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [{
+          label: 'Monthly Data',
+          data: [0, 0, 1, 2, 0, 0, 0, 2, 1, 3, 0, 5],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      // Configure the options
+      const optionsHalfday = {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      // Create the chart
+      const halfdayChart = new Chart(ctxHalfday, {
+        type: 'bar',
+        data: dataHalfday,
+        options: optionsHalfday
+      });
+    </script>
+
     <script>
         var sidebarjs = new SidebarJS.SidebarElement();
 
         $(document).ready(function(){
-          var video = document.querySelector("#video");
-          var canvas = document.createElement("canvas");
-          var context = canvas.getContext("2d");
-
-          $("#captureTimeInBtn").click(function(){
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            var dataUrl = canvas.toDataURL();
-            document.querySelector("#captured-image").setAttribute("src", dataUrl);
-
-            document.getElementById('video').style.display = 'none';
-            document.getElementById('captureTimeInBtn').disabled = true;
-          });
-
           $("#year").change(function(){
             alert($('#year').val());
+
+            document.getElementById("workDays").innerHTML = "<?php echo rand(22, 230); ?>";
+            document.getElementById("presentDays").innerHTML = "<?php echo rand(18, 230); ?>";
+            document.getElementById("absentDays").innerHTML = "<?php echo rand(1, 50); ?>";
+
           });
-
-          $('#timeInOutModal').on('hidden.bs.modal', function () {
-            // Clear previous image
-            document.getElementById('captured-image').setAttribute('src', '');
-          });
-
-          // View Time in Time out modal
-          $('#timeInOutModal').on('show.bs.modal',function (event) {
-              // Clear previous image
-              // document.getElementById('captured-image').setAttribute('src', '');
-
-              navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                  video.srcObject = stream;
-                  video.play();
-                })
-                .catch(function(err) {
-                  console.log("An error occurred: " + err);
-                });
-
-              document.getElementById('captureTimeInBtn').disabled = false;
-              document.getElementById('video').style.display = 'block';
-
-              // Button that triggered the modal
-              var e = $(event.relatedTarget);
-  
-              // Extract info from data attributes 
-              var type = e.data('type');
-              var title = e.data('title');
-              
-              // jQuery query selectors
-              var modal = $(this);
-                  
-              document.getElementById("modal-title").innerHTML = title;
-              document.getElementById("type-in-out").innerHTML = type;
-              
-              // for textfield
-              // document.getElementById("#").value = "value";
-          });
-
-          $('#dtrMessageModal').on('hidden.bs.modal', function () {
-            window.location.reload();
-          });
-
-          $('#errorModal').on('hidden.bs.modal', function () {
-            window.location.reload();
-          });
-
-          $("#confirmTimeInBtn").click(function(){
-            var flag = 0;
-            var current_time = $('#current_time').val();
-            var type = document.getElementById("type-in-out").innerHTML;
-            var image = $('#captured-image').prop('src'); // or attr sa prop
-
-            if (image == '' || image == undefined) {
-              $('#video').css('border', '1px solid red');
-              // document.getElementById("new-title-err").innerHTML = "<span style='color: red;'><strong>Can't be blank!</strong></span>";
-              flag = 1;
-            }
-
-            if (flag == 0) {
-              $.ajax({
-              url: "<?php echo base_url(); ?>dtr/time_in_out",
-              method: 'POST',
-              dataType: "JSON",
-              data: {
-                type: type,
-                current_time: current_time, 
-                image: image,
-              },
-              success: function (response) {
-                console.log(response);
-                $('#timeInOutModal').modal('toggle');
-
-                if (response == "Time in successfully (AM)" || response == "Time in successfully (PM)" || response == "Time out successfully (AM)" || response == "Time out successfully (PM)" || response == "Already time in (AM)" || response == "Already time in (PM)" || response == "Okay for today" || response == "Already time out (AM)" || response == "Already time out (PM)"){
-                  document.getElementById("messageDtr").innerHTML = response;
-                  $('#dtrMessageModal').modal('show');
-                  
-                  // setTimeout(function() {
-                  //   $('#dtrMessageModal').modal('toggle');
-                  //   window.location.href = '<?php echo base_url(); ?>main/index';
-                  // }, 4000);
-                } else {
-                  document.getElementById("errorPtag").innerHTML = response;
-                  $('#errorModal').modal('show');
-
-                  // setTimeout(function() {
-                  //   window.location.reload();
-                  // }, 4000);
-                }
-              },
-              error: function (request, status, error) {
-                alert(request.responseText);
-              }
-              });
-            } 
-          });
-
 
           $("#changePasswordBtn").click(function(){
             $('#changePasswordModal').modal('show');

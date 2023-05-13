@@ -48,7 +48,8 @@ class Dtr extends CI_Controller {
                 // check image kung nasave sa assets folder
                 if (file_exists('./assets/'.$image_title.'.png')) {
                         // Save punch time
-                        $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type, $imagessss);
+                        // $result = $this->dtrmodel->save_time_in_out($employee_db_id, $current_time, $current_date, $type, $imagessss);
+                        $result = $this->dtrmodel->save_time_in_out($employee_db_id, date('H:i:s', strtotime('08:06')), '2023-05-19', $type, $imagessss);
 
                         // Delete image
                         unlink('./assets/'.$image_title.'.png');
