@@ -6,16 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Employee DTR</title>
     <meta name="description" content="Main Page">
-    <?php 
-            echo link_tag('css/bootstrap-reboot.min.css');
-            echo link_tag('css/bootstrap.min.css');
-            echo link_tag('css/bootstrap-grid.min.css');
-            echo link_tag('css/bootstrap-icons.css');
-            echo link_tag('css/sidebarjs.min.css');
-            echo link_tag('css/styles.css');     
+    <?php
+    echo link_tag('css/bootstrap-reboot.min.css');
+    echo link_tag('css/bootstrap.min.css');
+    echo link_tag('css/bootstrap-grid.min.css');
+    echo link_tag('css/bootstrap-icons.css');
+    echo link_tag('css/sidebarjs.min.css');
+    echo link_tag('css/styles.css');
     ?>
-   
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" integrity="sha512-PIAUVU8u1vAd0Sz1sS1bFE5F1YjGqm/scQJ+VIUJL9kNa8jtAWFUDMu5vynXPDprRRBqHrE8KKEsjA7z22J1FA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" integrity="sha512-xnwMSDv7Nv5JmXb48gKD5ExVOnXAbNpBWVAXTo9BJWRJRygG8nwQI81o5bYe8myc9kiEF/qhMGPjkSsF06hyHA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        th {
+            text-align: center;
+            vertical-align: center;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,7 +32,7 @@
     <!-- Navigation --->
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebarView" sidebarjs>
+        <div id="sidebarView" sidebarjs>
               <div class="content">
                 <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-chevron-left"></i></div>
                 <nav class="navbar flex-column mt-2 text-left">
@@ -31,9 +40,9 @@
                   <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
                   <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
                   <?php if ($category != "employee"){?>
-                    <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
+                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
                     <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
-                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
+                    <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
                   <?php } ?>
                   <a class="w-100 mr-2 text-white text-left" href="#" role="button" id="changePasswordBtn">Change Password</a>
@@ -51,13 +60,15 @@
               </div>
             </nav>
             <main role="main" class="col">
-                <nav class="navbar navbar-expand-lg navbar-light text-white" style="background-color: #4C4E52 !important;">
-                    <!-- <a class="btn btn-warning text-white" href="<php echo base_url(); ?>" role="button"><i class="bi bi-house-door-fill"></i> National</a> -->
-                    <h2>Daily Time Record</h2>
+            <nav class="navbar navbar-expand-lg navbar-light text-white" style="background-color: #4C4E52 !important; height: 50px;">
+                    <div class="col-md-6 mt-1">
+                        <h5 style="font-size: 25px;">Daily Time Record</h5>
+                    </div>
+
                     <?php if (isset($employee_id)) { ?>
-                      <div class="text-right" style="margin-left: 1450px !important;">
-                        <h5>Hello, <b><?php echo $first_name; ?></b></h5>
-                      </div>
+                        <div class="col-md-6 mt-1 text-right">
+                            <h5 style="font-size: 20px;">Hello, <b><?php echo $first_name; ?></b> <i class="fa fa-user-circle-o" aria-hidden="true"></i></h5>
+                        </div>
                     <?php } ?>
                 </nav>
 
@@ -173,6 +184,73 @@
                         </div>
                     </div>
                     </div>
+
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="timeout_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">TIME-OUT</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row justify-content-center mb-2">
+                                
+                                    <select id="select_month_timeout" name="" class="border rounded pass-label mr-3">
+                                            <option value="1">January</option>
+                            
+                                    </select>    
+                                
+                                    <select id="select_day_timeout" name="" class="border rounded pass-label">
+                                            <option value="1">1</option>
+                                           
+                                    </select>
+                            
+                            </div>
+
+                            <div class="row justify-content-center">
+                                
+                                    <select id="select_hour_timeout" name="" class="border rounded pass-label mr-3">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                    </select>    
+                                
+                                    <select id="select_minute_timeout" name="" class="border rounded pass-label mr-3">
+                                        <?php
+                                            for ($x = 0; $x <= 59; $x++) {
+                                                echo "<option value='".$x."'>".$x."</option>";
+                                              }
+                                        ?>
+                                    </select>
+                                
+                                    <select id="select_ampm_timeout" name="" class="border rounded pass-label">
+                                            <option value="AM">AM</option>
+                                            <option value="PM">PM</option>
+                                    </select>
+                            
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="timeoutmodal_save">Save</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                     
 
                 <div class="row">
@@ -199,25 +277,25 @@
                     </div>
                     <!-- Variety Group -->
                     <div class="row mt-3 ml-5 mr-4">
-                        <div class="col-5">
+                    <div class="col-5">
                             <!-- Month -->
-                            <select id="month" name="month" class="border rounded pass-label" style="text-align-last: center; height: 40px; width: 150px;" data-live-search="true">
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August">August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
+                            <select id="select_month" name="month" class="border rounded pass-label" style="text-align-last: center; height: 40px; width: 150px;" data-live-search="true">
+                                <option value="01" <?php if ($month == '01'){  echo "selected"; } ?>>January</option>
+                                <option value="02" <?php if ($month == '02'){  echo "selected"; } ?>>February</option>
+                                <option value="03" <?php if ($month == '03'){  echo "selected"; } ?>>March</option>
+                                <option value="04" <?php if ($month == '04'){  echo "selected"; } ?>>April</option>
+                                <option value="05" <?php if ($month == '05'){  echo "selected"; } ?>>May</option>
+                                <option value="06" <?php if ($month == '06'){  echo "selected"; } ?>>June</option>
+                                <option value="07" <?php if ($month == '07'){  echo "selected"; } ?>>July</option>
+                                <option value="08" <?php if ($month == '08'){  echo "selected"; } ?>>August</option>
+                                <option value="09" <?php if ($month == '09'){  echo "selected"; } ?>>September</option>
+                                <option value="10" <?php if ($month == '10'){  echo "selected"; } ?>>October</option>
+                                <option value="11" <?php if ($month == '11'){  echo "selected"; } ?>>November</option>
+                                <option value="12" <?php if ($month == '12'){  echo "selected"; } ?>>December</option>
                             </select>
 
                             <!-- Year -->
-                            <select id="year" name="year" class="border rounded pass-label" data-live-search="true" style="text-align-last: center; height: 40px; width: 100px;">
+                            <select id="select_year" name="year" class="border rounded pass-label" data-live-search="true" style="text-align-last: center; height: 40px; width: 100px;">
                                 <option value="<?php echo date("Y"); ?>"><?php echo date("Y"); ?></option>
                                 <option value="<?php echo date("Y") - 1; ?>"><?php echo date("Y") - 1; ?></option>
                                 <option value="<?php echo date("Y") - 2; ?>"><?php echo date("Y") - 2; ?></option>
@@ -234,7 +312,7 @@
 
                         <div class="col-2">
 							<button class="btn btn-secondary" type="button" id="timein_btn" data-toggle="modal" data-target="#timein_modal" disabled>Time In</button>
-                            <button class="btn btn-secondary" type="button" id="timeout_btn" disabled>Time Out</button>
+                            <button class="btn btn-secondary" type="button" id="timeout_btn" data-toggle="modal" data-target="#timeout_modal" disabled>Time Out</button>
                         </div>
                     </div>
                   </div>
@@ -286,7 +364,118 @@
         var sidebarjs = new SidebarJS.SidebarElement();
 
 
+        function getEmployeesDtrPerMonth(){
+            var slected_month = $('#select_month').val();
+            var slected_year = $('#select_year').val();
+
+            var base_url = '<?php echo base_url() ?>';
+
+            // $("a#printDtrForm").attr("href", base_url + "main/print_dtr_form/" + month + "/" + year)
+            // $("a#printDtrTable").attr("href", base_url + "main/print_dtr_table/" + month + "/" + year)
+
+            var selected_employee = $('#select_employee').val();
+            $.ajax({
+              url: "<?php echo base_url(); ?>employeedtr/get_time_records",
+              method: 'POST',
+              dataType: "JSON",
+              data: {
+                month: slected_month,
+                year: slected_year, 
+                emp_dbid:selected_employee
+              },
+              success: function (response) {
+                // console.log(new Date(response['time_records'][1]['date']).getDate());
+                // console.log(response['time_records'][1]['date']);
+
+                const year = response['year'];
+                const month = response['month'];
+                const days = response['days'];
+                const time_records = response['time_records'];
+
+                 const t_array = [];
+
+                  const d_temp = new Date(slected_month+"/1/"+slected_year);
+                  let day_temp = d_temp.getDay();
+            
+                
+                
+                // var array_response = JSON.parse(response);
+
+                var table_content = "";
+                const days_name = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                for (let i = 1 ; i <= days; i++) {
+                  
+                  const date_str = '"'+month+'/'+i+'/'+ year+'"'; // mm/dd/yyyy
+                  const date_obj = new Date(date_str);
+                //   const day_name = days_name[date_obj.getDay()];
+                if(day_temp == 7)
+                    day_temp = 0;
+                const day_name = days_name[day_temp];
+                day_temp++;
+                  
+                  if (time_records.length > 0){
+                    for (let e = 0 ; e < time_records.length; e++) {
+                      if (i == new Date(response['time_records'][e]['date']).getDate()){  
+                        if (day_name == 'Sun' ||day_name == 'Sat' ){
+                          table_content += '<tr style="background-color: #ededed;">';
+                        } else {
+                          table_content += '<tr>';
+                        }
+
+                        table_content += '<th>' + i + '</th>'
+                        table_content += '<td>'+ time_records[e]['am_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['am_time_out'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_in'] +'</td>'
+                        table_content += '<td>'+ time_records[e]['pm_time_out'] +'</td>'
+                        table_content += '<td style="text-align: center";>'+day_name+'</td>'
+                        table_content += '<td></td>'
+                        table_content += '</tr>';
+
+                        t_array.push(i);
+                      }
+                    }
+                  }
+
+                  if (!t_array.includes(i)){
+                    if (day_name == 'Sun' ||day_name == 'Sat' ){
+                        table_content += '<tr style="background-color: #ededed;">';
+                      } else {
+                        table_content += '<tr>';
+                      }
+
+                      table_content += '<th>' + i + '</th>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td></td>'
+                      table_content += '<td style="text-align: center";>'+day_name+'</td>'
+                      table_content += '<td></td>'
+                      table_content += '</tr>';
+                    }
+                  }
+                
+                document.getElementById("table_body").innerHTML = table_content;
+                
+              },
+              error: function (request, status, error) {
+                alert(request.responseText);
+              }
+            });
+        }
+
+         // Change month, change table value
+         $("#select_month").change(function(){
+                getEmployeesDtrPerMonth();
+          });
+
+          $("#select_year").change(function(){
+                getEmployeesDtrPerMonth();
+          });
+
+
         function getEmployeeDTR(emp_dbid){
+
+
             $.ajax({
             url: '<?php echo base_url(); ?>/get-empdtr',
             type: 'POST',
@@ -329,7 +518,7 @@
         else{
             document.getElementById("timein_btn").disabled = false;
             document.getElementById("timeout_btn").disabled = false;
-            getEmployeeDTR(selected_employee);
+            getEmployeesDtrPerMonth();
         }
             
     });
@@ -353,7 +542,9 @@
             select_month_timein_options += "<option value='"+i+"'>"+month_names[i]+"</option>"
         }
     document.getElementById("select_month_timein").innerHTML = select_month_timein_options;
+    document.getElementById("select_month_timeout").innerHTML = select_month_timein_options;
     
+
     function getDaysInCurrentMonth() {
         // const date = new Date();
         return new Date(currentdate.getFullYear(), currentdate.getMonth() + 1, 0).getDate();
@@ -364,6 +555,7 @@
             select_day_timein_options += "<option value='"+i+"'>"+i+"</option>"
         }
     document.getElementById("select_day_timein").innerHTML = select_day_timein_options;
+    document.getElementById("select_day_timeout").innerHTML = select_day_timein_options;
 
 
 
@@ -380,8 +572,51 @@
         }
 
 
+        
+
+        function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        //minutes = minutes < 10 ? '0'+minutes : minutes;
+        //var strTime = hours + ':' + minutes + ' ' + ampm;
+        //return strTime;
+
+        var currenttime = [hours, minutes, ampm];
+        //var currenttime = [5, 45, 'pm'];
+        return currenttime;
+        }
+
 
         function saveTimeInData(){
+
+            var d = new Date(); // for now
+            var currenttime = formatAMPM(d);
+
+            var time_in_mode;
+            if(currenttime[2] == 'am' && currenttime[0] <=11){
+                time_in_mode = "morning time-in";
+                if(currenttime[0] == 11 && currenttime[1] != 0)
+                    time_in_mode = "afternoon time-in";
+            }else if(currenttime[2] == 'pm'){
+                if(currenttime[0] ==12 || (currenttime[0] <=4)){
+                    time_in_mode = "afternoon time-in";
+                }
+                if(currenttime[0] == 4 && currenttime[1] != 0){
+                    alert("No more time-in allowed")
+                    return;
+                }
+                if(currenttime[0] > 4){
+                    alert("No more time-in allowed")
+                    return;
+                }
+            }
+            // time_in_mode = "afternoon time-in";
+
+            //alert(currenttime[2]);
+            //alert(formatAMPM(d));
 
             var hour = $('#select_hour_timein').val();
             var minute = $('#select_minute_timein').val();
@@ -405,7 +640,7 @@
             $.ajax({
             url: '<?php echo base_url(); ?>/insert-timeindata',
             type: 'POST',
-            data: {emp_dbid: selected_employee, time_in:time_in, date_in: date_in},
+            data: {emp_dbid: selected_employee, time_in:time_in, date_in: date_in, time_in_mode:time_in_mode},
             error: function() {
                 alert('Something went wrong upon the data request.');
             },
@@ -413,7 +648,8 @@
                     var array_response = JSON.parse(data);
                     alert(array_response);
                     $('#timein_modal').modal('hide');
-                    getEmployeeDTR(selected_employee);
+                    // getEmployeeDTR(selected_employee);
+                    getEmployeesDtrPerMonth();
             }
             });
         }
@@ -423,6 +659,73 @@
         saveTimeInData();
     });
 
+
+
+
+    function saveTimeOutData(){
+
+        var d = new Date(); // for now
+        var currenttime = formatAMPM(d);
+
+        var time_out_mode;
+        if(currenttime[2] == 'am' && currenttime[0] >=9){
+            time_out_mode = "morning time-out";
+        }else if(currenttime[2] == 'pm' && currenttime[0] ==12){
+            time_out_mode = "morning time-out";
+        }else if(currenttime[2] == 'pm' && currenttime[0] ==1 && currenttime[1] ==0){
+            time_out_mode = "morning time-out";
+        }
+        else if(currenttime[2] == 'pm' && currenttime[0] >=2 ){
+            time_out_mode = "afternoon time-out";
+        }else{
+            alert("Not able to time-out during this time");
+            return;
+        }
+        //time_in_mode = "afternoon time-in";
+
+        //alert(currenttime[2]);
+        //alert(formatAMPM(d));
+
+        var hour = $('#select_hour_timeout').val();
+        var minute = $('#select_minute_timeout').val();
+        var ampm = $('#select_ampm_timeout').val();
+        if(minute<10){
+            minute = "0"+minute;
+        }
+        var time_out = hour+":"+minute+" "+ampm;
+
+
+        var month = $('#select_month_timeout').val();
+        var day = $('#select_day_timeout').val();
+        var year = getProcessedDateTime();
+        var date_in = year+"-"+month+"-"+day;
+        // alert(time_in);
+        // alert(date_in);
+
+        var selected_employee = $('#select_employee').val();
+
+
+        $.ajax({
+        url: '<?php echo base_url(); ?>/insert-timeoutdata',
+        type: 'POST',
+        data: {emp_dbid: selected_employee, time_out:time_out, date_in: date_in, time_out_mode:time_out_mode},
+        error: function() {
+            alert('Something went wrong upon the data request.');
+        },
+        success: function(data) {
+                var array_response = JSON.parse(data);
+                alert(array_response);
+                $('#timeout_modal').modal('hide');
+                // getEmployeeDTR(selected_employee);
+                getEmployeesDtrPerMonth();
+        }
+        });
+    }
+
+
+    $("#timeoutmodal_save").click(function(){
+        saveTimeOutData();
+    });
 
     </script>
 </body>
