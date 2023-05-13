@@ -30,6 +30,7 @@ class Main extends CI_Controller {
 			$data['first_name'] = $_SESSION['user']['f_name'];
             $data['last_name'] = $_SESSION['user']['s_name'];
             $data['category'] = $_SESSION['user']['category'];
+            $data['full_name'] = $data['first_name']." ".$data['last_name'];
 
             $data['year'] = date("Y");
             $data['month'] = date("m"); 

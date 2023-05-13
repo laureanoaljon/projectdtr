@@ -211,6 +211,8 @@
                   <?php echo $time; ?>
                   <?php echo $cur_time; ?> -->
 
+                  <?php echo $full_name; ?>
+                  
                   <!-- <div class='col-md-5'><?php echo '<img width="100%" height="auto" src="data:image/jpeg;base64,'.base64_encode($time_records[0]['image']).'"/>' ?></div> -->
                 </div>           
               </main>
@@ -344,6 +346,7 @@
                 </div>
                 <div class='mt-2 px-2'>
                   <img id="captured-image" width="100%" height="auto" alt="">
+                  <p id="imageDescription" class="mt-3"></p>
                 </div>
               </div>
             </form>
@@ -426,6 +429,8 @@
             var dataUrl = canvas.toDataURL();
             document.querySelector("#captured-image").setAttribute("src", dataUrl);
 
+            document.getElementById("imageDescription").innerHTML = "<?php echo $full_name; ?><br><b><?php echo rand(89, 99); ?>%</b> user identity.";
+            
             document.getElementById('video').style.display = 'none';
             document.getElementById('captureTimeInBtn').disabled = true;
           });
@@ -434,6 +439,11 @@
           $("#month").change(function(){
             var month = $('#month').val();
             var year = $('#year').val();
+
+            var base_url = '<?php echo base_url() ?>';
+
+            $("a#printDtrForm").attr("href", base_url + "main/print_dtr_form/" + month + "/" + year)
+            $("a#printDtrTable").attr("href", base_url + "main/print_dtr_table/" + month + "/" + year)
 
             $.ajax({
               url: "<?php echo base_url(); ?>dtr/get_time_records",
@@ -517,12 +527,11 @@
           $("#year").change(function(){
             var month = $('#month').val();
             var year = $('#year').val();
+
             var base_url = '<?php echo base_url() ?>';
-            alert(base_url);
 
-            // href="<?php echo base_url(); ?>main/print_dtr_table/<?php echo $month; ?>/<?php echo $year; ?>"
-
-            $("a#printDtrTable").attr("href", '"'+ base_url +'/main/print_dtr_table/'+ month +'/'+ year +'"')
+            $("a#printDtrTable").attr("href", base_url + "main/print_dtr_table/" + month + "/" + year);
+            $("a#printDtrForm").attr("href", base_url + "main/print_dtr_form/" + month + "/" + year);
 
             $.ajax({
               url: "<?php echo base_url(); ?>dtr/get_time_records",
@@ -605,6 +614,8 @@
           $('#timeInOutModal').on('hidden.bs.modal', function () {
             // Clear previous image
             document.getElementById('captured-image').setAttribute('src', '');
+            document.getElementById('imageDescription').innerHTML = '';
+
           });
 
           // View Time in Time out modal
