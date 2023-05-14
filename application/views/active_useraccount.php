@@ -31,32 +31,32 @@
     <!-- Navigation --->
     <div class="container-fluid">
         <div class="row">
-        <div id="sidebarView" sidebarjs>
-              <div class="content">
-                <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-chevron-left"></i></div>
-                <nav class="navbar flex-column mt-2 text-left">
-                  <h4 class="text-white text-left">Menu</h4>
-                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
-                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
-                  <?php if ($category != "employee"){?>
-                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
-                    <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
-                    <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
-                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
-                  <?php } ?>
-                  <a class="w-100 mr-2 text-white text-left" href="#" role="button" id="changePasswordBtn">Change Password</a>
-                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/logout" role="button">Logout</a>
-                </nav>
-              </div>
+            <div id="sidebarView" sidebarjs>
+                <div class="content">
+                    <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-chevron-left"></i></div>
+                    <nav class="navbar flex-column mt-2 text-left">
+                        <h4 class="text-white text-left">Menu</h4>
+                        <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
+                        <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
+                        <?php if ($category != "employee") { ?>
+                            <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
+                            <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
+                            <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
+                            <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
+                        <?php } ?>
+                        <a class="w-100 mr-2 text-white text-left" href="#" role="button" id="changePasswordBtn">Change Password</a>
+                        <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/logout" role="button">Logout</a>
+                    </nav>
+                </div>
             </div>
             <nav id="sidebarMenu" class="col d-md-block sidebar collapsed">
-              <div class="sidebar-sticky pt-1">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-list"></i></div>
-                    </li>
-                </ul>
-              </div>
+                <div class="sidebar-sticky pt-1">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-list"></i></div>
+                        </li>
+                    </ul>
+                </div>
             </nav>
 
 
@@ -89,38 +89,59 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <img src="<?php echo base_url(); ?>/assets/user.png" alt="Girl in a jacket">
-                                        <button class="btn btn-secondary" type="button">Change</button>
+
+
+                                <form method="post" id="upload_form" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-4">
+
+                                            <!-- <label for="dpupload_input" style="cursor: pointer;">Change</label> -->
+                                            <!-- style="opacity: 0; position: absolute; z-index: -1;" -->
+                                            <?php
+                                            if (isset($error)) {
+                                                echo $error;
+                                            }
+                                            ?>
+                                            <!-- <input class="form-control" type="file" name="image" id="dpupload_input" size="33"> -->
+                                            <div id="divMsg" class="alert alert-success" style="display: none">
+                                                <span id="msg"></span>
+                                            </div>
+                                            <img id="blah" src="<?php echo base_url(); ?>/assets/user.png" alt="Girl in a jacket">
+
+                                            <input type="file" name="image_file" multiple="true" accept="image/*" id="finput" onchange="readURL(this);" style="width: 100px;"></br></br>
+
+                                            <div class="col-md-5"></div>
+                                        </div>
+
+                                        <div class="col-8">
+                                            <div class="row mb-2">
+                                                <p class="mr-2">ID-Number: </p>
+                                                <input type="text" name="newuser_idnumber" id="newuser_idnumber">
+                                            </div>
+                                            <div class="row mb-2">
+                                                <p class="mr-2">Surname: </p>
+                                                <input type="text" name="newuser_surname" id="newuser_surname">
+                                            </div>
+                                            <div class="row mb-2">
+                                                <p class="mr-2">First Name: </p>
+                                                <input type="text" name="newuser_fname" id="newuser_fname">
+                                            </div>
+                                            <div class="row mb-2">
+                                                <p class="mr-2">Category: </p>
+                                                <select id="newuser_category" name="newuser_category" class="border rounded pass-label">
+                                                    <option value="Select">Select Category</option>
+                                                    <option value="employee">Employee</option>
+                                                    <option value="office-head">Office Head</option>
+                                                    <option value="hr-personnel">HR Personnel</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
                                     </div>
 
-                                    <div class="col-8">
-                                        <div class="row mb-2">
-                                            <p class="mr-2">ID-Number: </p>
-                                            <input type="text" name="" id="newuser_idnumber">
-                                        </div>
-                                        <div class="row mb-2">
-                                            <p class="mr-2">Surname: </p>
-                                            <input type="text" name="" id="newuser_surname">
-                                        </div>
-                                        <div class="row mb-2">
-                                            <p class="mr-2">First Name: </p>
-                                            <input type="text" name="" id="newuser_fname">
-                                        </div>
-                                        <div class="row mb-2">
-                                            <p class="mr-2">Category: </p>
-                                            <select id="newuser_category" name="" class="border rounded pass-label">
-                                                <option value="Select">Select Category</option>
-                                                <option value="employee">Employee</option>
-                                                <option value="office-head">Office Head</option>
-                                                <option value="hr-personnel">HR Personnel</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                </form>
 
-
-                                </div>
 
 
                             </div>
@@ -227,7 +248,7 @@
                                             echo "<td>" . $row->s_name . "</td>";
                                             echo "<td>" . $row->f_name . "</td>";
                                             echo "<td>" . $row->category . "</td>";
-                                            echo "<td><input type='button' value='Edit' onclick='editaccount(" . $row->db_id . ")'><input type='button' value='Manage Face Recognition' onclick='manageFaceReco(" . $row->db_id . ")'></td>";
+                                            echo "<td><input class='mr-2' type='button' value='Edit' onclick='editaccount(" . $row->db_id . ")'><input type='button' value='Manage Face Recognition' onclick='manageFaceReco(" . $row->db_id . ")'></td>";
                                             echo "</tr>";
                                             $row_number++;
                                         }
@@ -257,32 +278,46 @@
     <script>
         var sidebarjs = new SidebarJS.SidebarElement();
 
-        function editaccount(emp_dbid){
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function editaccount(emp_dbid) {
 
             $('#accid_tobeedited').val(emp_dbid);
-            
+
 
             //getaccount data
             $.ajax({
-                    url: '<?php echo base_url(); ?>/get-accountdata',
-                    type: 'POST',
-                    data: {
-                        emp_dbid: emp_dbid
-                    },
-                    error: function() {
-                        alert('Something went wrong upon the data request.');
-                    },
-                    success: function(data) {
-                        var array_response = JSON.parse(data);
-                        //console.log(array_response);
+                url: '<?php echo base_url(); ?>/get-accountdata',
+                type: 'POST',
+                data: {
+                    emp_dbid: emp_dbid
+                },
+                error: function() {
+                    alert('Something went wrong upon the data request.');
+                },
+                success: function(data) {
+                    var array_response = JSON.parse(data);
+                    //console.log(array_response);
 
-                        $('#edituser_idnumber').val(array_response.employee_id);
-                        $('#edituser_surname').val(array_response.s_name);
-                        $('#edituser_fname').val(array_response.f_name);
-                        $('#edituser_category').val(array_response.category);
-                        $("#editaccount_modal").modal()
-                    }
-                });   
+                    $('#edituser_idnumber').val(array_response.employee_id);
+                    $('#edituser_surname').val(array_response.s_name);
+                    $('#edituser_fname').val(array_response.f_name);
+                    $('#edituser_category').val(array_response.category);
+                    $("#editaccount_modal").modal()
+                }
+            });
         }
 
         $(document).ready(function() {
@@ -311,7 +346,7 @@
                             table_content += '<td>' + array_response[i].s_name + '</td>'
                             table_content += '<td>' + array_response[i].f_name + '</td>'
                             table_content += '<td>' + array_response[i].category + '</td>'
-                            table_content += '<td><input type="button" value="Edit" onclick="editaccount(' + array_response[i].db_id + ')"><input type="button" value="Manage Face Recognition" onclick="manageFaceReco(' + array_response[i].db_id + ')"></td>';
+                            table_content += '<td><input class="mr-2" type="button" value="Edit" onclick="editaccount(' + array_response[i].db_id + ')"><input type="button" value="Manage Face Recognition" onclick="manageFaceReco(' + array_response[i].db_id + ')"></td>';
                             table_content += '</tr>';
 
                         }
@@ -328,6 +363,7 @@
                 var sname = $('#newuser_surname').val();
                 var fname = $('#newuser_fname').val();
                 var cat = $('#newuser_category').val();
+                var dp = $('#dpupload_input').val();
                 var pw = idnumber + "!" + sname;
 
                 $.ajax({
@@ -338,7 +374,8 @@
                         sname: sname,
                         fname: fname,
                         cat: cat,
-                        pw: pw
+                        pw: pw,
+                        dp: dp
                     },
                     error: function() {
                         alert('Something went wrong upon the data request.');
@@ -363,7 +400,49 @@
 
 
             $("#newusermodal_save").click(function() {
-                saveNewUserAccount();
+                 saveNewUserAccount();
+                //document.getElementById("upload_form").submit();
+            });
+
+
+
+
+            $('#upload_form').on('submit', function(e) {
+                
+                e.preventDefault();
+                //    if($('#image_file').val() == '')  
+                //    {  
+                //         alert("Please Select the File");  
+                //    }  
+                //    else 
+                //    {  
+                $.ajax({
+                    url: "<?php echo base_url(); ?>/insert-newuserdata",
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(res) {
+                        alert(res);
+                        //console.log(res.success);
+                        // if(res.success == true){
+                        //  //$('#blah').attr('src','//www.tutsmake.com/ajax-image-upload-with-preview-in-codeigniter/');   
+                        //  $('#msg').html(res.msg);   
+                        //  $('#divMsg').show();   
+                        // }
+                        // else if(res.success == false){
+                        //   $('#msg').html(res.msg); 
+                        //   $('#divMsg').show(); 
+                        // }
+                        // setTimeout(function(){
+                        //  $('#msg').html('');
+                        //  $('#divMsg').hide(); 
+                        // }, 3000);
+                    }
+                });
+                // }  
             });
 
 
@@ -374,41 +453,41 @@
 
             function saveEditedUserAccount() {
 
-            var db_id = $('#accid_tobeedited').val();
-            var idnumber = $('#edituser_idnumber').val();
-            var sname = $('#edituser_surname').val();
-            var fname = $('#edituser_fname').val();
-            var cat = $('#edituser_category').val();
-            
-            $.ajax({
-                url: '<?php echo base_url(); ?>/edit-userdata',
-                type: 'POST',
-                data: {
-                    db_id:db_id,
-                    idnumber: idnumber,
-                    sname: sname,
-                    fname: fname,
-                    cat: cat
-              },
-                error: function() {
-                    alert('Something went wrong upon the data request.');
-                },
-                success: function(data) {
-                    var array_response = JSON.parse(data);
-                    alert(array_response);
+                var db_id = $('#accid_tobeedited').val();
+                var idnumber = $('#edituser_idnumber').val();
+                var sname = $('#edituser_surname').val();
+                var fname = $('#edituser_fname').val();
+                var cat = $('#edituser_category').val();
 
-                    if (array_response == "User Account edited") {
-                        getActiveUserAccounts();
-                        $('#editaccount_modal').modal('hide');
+                $.ajax({
+                    url: '<?php echo base_url(); ?>/edit-userdata',
+                    type: 'POST',
+                    data: {
+                        db_id: db_id,
+                        idnumber: idnumber,
+                        sname: sname,
+                        fname: fname,
+                        cat: cat
+                    },
+                    error: function() {
+                        alert('Something went wrong upon the data request.');
+                    },
+                    success: function(data) {
+                        var array_response = JSON.parse(data);
+                        alert(array_response);
 
-                        $('#edituser_idnumber').val("");
-                        $('#edituser_surname').val("");
-                        $('#edituser_fname').val("");
-                        $('#edituser_category').val("Select");
+                        if (array_response == "User Account edited") {
+                            getActiveUserAccounts();
+                            $('#editaccount_modal').modal('hide');
+
+                            $('#edituser_idnumber').val("");
+                            $('#edituser_surname').val("");
+                            $('#edituser_fname').val("");
+                            $('#edituser_category').val("Select");
+                        }
+
                     }
-
-                }
-            });
+                });
             }
 
             $("#editusermodal_save").click(function() {
@@ -418,13 +497,13 @@
             $("#editusermodal_archive").click(function() {
 
                 var db_id = $('#accid_tobeedited').val();
-                
+
                 $.ajax({
                     url: '<?php echo base_url(); ?>/archive-user',
                     type: 'POST',
                     data: {
-                        db_id:db_id
-                },
+                        db_id: db_id
+                    },
                     error: function() {
                         alert('Something went wrong upon the data request.');
                     },
@@ -447,8 +526,6 @@
             });
 
         });
-
-      
     </script>
 </body>
 

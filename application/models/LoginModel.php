@@ -17,6 +17,8 @@ class LoginModel extends CI_Model
         $this->db->from('employee');
         $this->db->where('employee_id', $id_number);
         $this->db->where('password', $password);
+        $this->db->where('is_active', 1);
+        
         $query = $this->db->get();
         
         if ($query->num_rows() > 0){

@@ -21,14 +21,15 @@ class AccountManagementModel extends CI_Model{
     }
 
 
-    function insertUserAccount($idnumber, $sname, $fname, $cat, $pw){
+    function insertUserAccount($idnumber, $sname, $fname, $cat, $pw,$image_path){
         $data = array(
                 'employee_Id' => $idnumber,
                 's_name' => $sname,
                 'f_name' => $fname,
                 'category' => $cat,
                 'password' => $pw,
-                'is_active' => 1
+                'is_active' => 1,
+                'dp' => $image_path
         );
     
         $this->db->insert('employee', $data);
@@ -89,6 +90,15 @@ class AccountManagementModel extends CI_Model{
         return "User Account deleted";
 
     }
+
+    // public function insertAccountDp($image_path, $db_id)
+	// {
+	// 	$this->db->set('dp', $image_path);
+    //     $this->db->where('db_id', $db_id);
+    //     $this->db->update('employee'); // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
+
+    //     return "Image uploaded";
+	// }
 
 
 }

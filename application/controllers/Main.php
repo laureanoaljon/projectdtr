@@ -7,6 +7,7 @@ class Main extends CI_Controller {
         parent::__construct();
         $this->load->model('loginmodel');
         $this->load->model('dtrmodel');
+        $this->load->model('EmployeeDTRModel', 'empdtr');
         
         $this->load->library('form_validation');
         $this->load->helper('html');
@@ -132,6 +133,7 @@ class Main extends CI_Controller {
 
         $month = $this->uri->segment(3);
         $year = $this->uri->segment(4);
+        
 
         $year = date("Y", strtotime(''.$year.'-'.$month.''));
         $month = date("m", strtotime(''.$year.'-'.$month.''));
@@ -144,6 +146,16 @@ class Main extends CI_Controller {
         $data['employee_id'] = $_SESSION['user']['employee_id'];
         $data['first_name'] = $_SESSION['user']['f_name'];
         $data['last_name'] = $_SESSION['user']['s_name'];
+
+        //for employee dtr
+        if($this->uri->segment(5) != null){
+            $employee_id = $this->uri->segment(5);
+            $employee_data = $this->empdtr->getEmployee($employee_id);
+            $data['employee_id'] = $employee_data->employee_id;
+            $data['first_name'] = $employee_data->f_name;
+            $data['last_name'] = $employee_data->s_name;
+            
+        }
 
         $selected_year_month = date("Y-m", strtotime(''.$year.'-'.$month.''));
 
@@ -186,6 +198,15 @@ class Main extends CI_Controller {
         $data['employee_id'] = $_SESSION['user']['employee_id'];
         $data['first_name'] = $_SESSION['user']['f_name'];
         $data['last_name'] = $_SESSION['user']['s_name'];
+
+         //for employee dtr
+         if($this->uri->segment(5) != null){
+            $employee_id = $this->uri->segment(5);
+            $employee_data = $this->empdtr->getEmployee($employee_id);
+            $data['employee_id'] = $employee_data->employee_id;
+            $data['first_name'] = $employee_data->f_name;
+            $data['last_name'] = $employee_data->s_name;
+        }
 
         $selected_year_month = date("Y-m", strtotime(''.$year.'-'.$month.''));
 

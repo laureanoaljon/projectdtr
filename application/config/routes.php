@@ -64,3 +64,11 @@ $route['archive-user']['post'] = 'activeuseraccount/archiveUserAccount';
 $route['revive-user']['post'] = 'archiveuseraccount/reviveUserAccount';
 $route['get-archiveaccounts']['post'] = 'archiveuseraccount/getArchiveUserAccounts';
 $route['delete-user']['post'] = 'archiveuseraccount/deleteUserAccount';
+
+
+// $route['image-upload'] = 'ImageUpload';
+// $route['image-upload/post']['get'] = "ImageUpload/create";
+// $route['image-upload/post']['post'] = "ImageUpload/store";
+// $route['image-upload'] = 'activeuseraccount';
+//  $route['image-upload/post']['get'] = "activeuseraccount/create";
+//  $route['image-upload/post']['post'] = "activeuseraccount/storeDp";

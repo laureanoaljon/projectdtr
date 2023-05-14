@@ -306,8 +306,8 @@
                         </div>
 
                         <div class="col-5">
-											    <button class="btn btn-secondary" type="button" id="loginBtn">Print DTR Table</button>
-                          <button class="btn btn-secondary" type="button" id="loginBtn">Print DTR Form</button>
+                             <a class="btn btn-secondary" href="" role="button" id="printDtrTable" target="_blank">Print DTR Table</a>
+                            <a class="btn btn-secondary" href="" role="button" id="printDtrForm" target="_blank">Print DTR Form</a>
                         </div>
 
                         <div class="col-2">
@@ -367,13 +367,16 @@
         function getEmployeesDtrPerMonth(){
             var slected_month = $('#select_month').val();
             var slected_year = $('#select_year').val();
+            var selected_employee = $('#select_employee').val();
 
             var base_url = '<?php echo base_url() ?>';
 
             // $("a#printDtrForm").attr("href", base_url + "main/print_dtr_form/" + month + "/" + year)
             // $("a#printDtrTable").attr("href", base_url + "main/print_dtr_table/" + month + "/" + year)
+            $("a#printDtrForm").attr("href", base_url + "main/print_dtr_form/" + slected_month + "/" + slected_year+ "/" + selected_employee);
+            $("a#printDtrTable").attr("href", base_url + "main/print_dtr_table/" + slected_month + "/" + slected_year+ "/" + selected_employee);
 
-            var selected_employee = $('#select_employee').val();
+            
             $.ajax({
               url: "<?php echo base_url(); ?>employeedtr/get_time_records",
               method: 'POST',
@@ -507,8 +510,7 @@
 
         
         $('#select_employee').change(function() {
-        var selected_employee = $('#select_employee').val();
-
+            var selected_employee = $('#select_employee').val();
 
         
         if(selected_employee == "Select"){

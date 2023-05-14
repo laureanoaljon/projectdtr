@@ -2,16 +2,17 @@
 
 class ActiveUserAccount extends CI_Controller{
 
-
+   
     function __construct(){
         parent::__construct();
 
         $this->load->helper('html');
         //$this->load->model('EmployeeDTRModel', 'empdtr');
         $this->load->model('AccountManagementModel', 'acctman');
-    
         $this->load->helper('url');
         $this->load->library('session');
+
+        $this->load->helper('form');
     }
 
 
@@ -45,8 +46,57 @@ class ActiveUserAccount extends CI_Controller{
 
 
         public function insertUserAccount(){
+
+
+            // if(isset($_FILES["image_file"]["name"]))  
+            // {  
+            //      $config['upload_path'] = './uploads/';  
+            //      $config['allowed_types'] = 'jpg|jpeg|png|gif';  
+            //      $this->load->library('upload', $config);  
+            //      if(!$this->upload->do_upload('image_file'))  
+            //      {  
+            //          $error =  $this->upload->display_errors(); 
+            //          echo json_encode(array('msg' => $error, 'success' => false));
+            //      }  
+            //      else 
+            //      {  
+            //           $data = $this->upload->data(); 
+            //           $insert['name'] = $data['file_name'];
+            //           //$this->db->insert('images',$insert);
+            //           //$getId = $this->db->insert_id();
+    
+            //           //$arr = array('msg' => 'Image has not uploaded successfully', 'success' => false);
+    
+            //         //   if($getId){
+            //         //    $arr = array('msg' => 'Image has been uploaded successfully', 'success' => true);
+            //         //   }
+            //           echo json_encode("Image has been uploaded successfully");
+            //      }  
+            // } 
+
+
+            // $config = array(
+			// 'upload_path' => "./uploads/",
+			// 'allowed_types' => "jpg|png|jpeg|gif",
+			// 'max_size' => "1024000", // file size , here it is 1 MB(1024 Kb)
+            // );
+            // $this->load->library('upload', $config);
+
+            // if ($this->upload->do_upload('image_file')) {
+
+            //     $image_path = $this->upload->data('file_name');
+                
+            //     //$result = $this->acctman->insertUserAccount($this->input->post('idnumber'),$this->input->post('sname'),$this->input->post('fname'),$this->input->post('cat'),$this->input->post('pw'), $image_path);
+            //     $this->session->set_flashdata('message', '<div class="alert alert-success">Image has been changed successfully.</div>');			
+            // }else{
+            //     $error = array('error' => $this->upload->display_errors());
+            //     //$result = $this->acctman->insertUserAccount($this->input->post('idnumber'),$this->input->post('sname'),$this->input->post('fname'),$this->input->post('cat'),$this->input->post('pw'), "error uploading photo");
+            //     $this->session->set_flashdata('message', '<div class="alert alert-danger">'.implode("",$error).'</div>');
+            // }
+
+		    // redirect(base_url());
             
-            $result = $this->acctman->insertUserAccount($this->input->post('idnumber'),$this->input->post('sname'),$this->input->post('fname'),$this->input->post('cat'),$this->input->post('pw'));
+            $result = $this->acctman->insertUserAccount($this->input->post('idnumber'),$this->input->post('sname'),$this->input->post('fname'),$this->input->post('cat'),$this->input->post('pw'), "");
             echo json_encode($result);
         }
 
@@ -75,5 +125,27 @@ class ActiveUserAccount extends CI_Controller{
             echo json_encode($result);
         }
 
+
+    // public function storeDp()
+	// {
+	// 	$config = array(
+	// 		'upload_path' => "./uploads/",
+	// 		'allowed_types' => "jpg|png|jpeg|gif",
+	// 		'max_size' => "3000000", // file size , here it is 1 MB(1024 Kb)
+	// 	);
+	// 	$this->load->library('upload', $config);
+
+	// 	if ($this->upload->do_upload('image')) {
+
+	// 		$image_path = $this->upload->data('file_name');
+	// 		$this->acctman->insertAccountDp($image_path, $this->input->post('db_id'));
+	// 		$this->session->set_flashdata('message', '<div class="alert alert-success">Image has been changed successfully.</div>');			
+	// 	}else{
+	// 		$error = array('error' => $this->upload->display_errors());
+	// 		$this->session->set_flashdata('message', '<div class="alert alert-danger">'.implode("",$error).'</div>');
+	// 	}
+
+	// 	redirect(base_url());
+	// }
     
 }

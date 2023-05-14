@@ -11,6 +11,15 @@ class EmployeeDTRModel extends CI_Model{
         return $query->result();
     }
 
+    function getEmployee($db_id){
+        
+        $this->db->select('db_id,employee_id,s_name,f_name');
+        $this->db->where("db_id", $db_id);
+        
+        $query = $this->db->get('employee');
+        return $query->row();
+    }
+
     function getEmployeeDtr($emp_dbid){
         
         $this->db->select('*');
