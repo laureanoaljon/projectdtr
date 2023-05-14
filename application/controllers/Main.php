@@ -65,10 +65,33 @@ class Main extends CI_Controller {
             $data['year'] = date("Y");
             $data['month'] = date("m"); 
             $data['days'] = cal_days_in_month(CAL_GREGORIAN, $data['month'], $data['year']);
+            
+            $day_count = $data['days'];
+            $year = $data['year'];
+            $month = $data['month'];
 
             $employee_id = $data['db_id'];
             $current_date = date("Y-m");
 
+            $workdays_arr = array();
+
+            //loop through all days
+            for ($i = 1; $i <= $day_count; $i++) {
+                $day_name = date('D', strtotime("{$year}-{$month}-{$i}"));
+
+                //if not a weekend add day to array
+                if($day_name != 'Sun' && $day_name != 'Sat'){
+                    array_push($workdays_arr, $day_name);
+                }
+            }
+
+            $data['workdays_count'] = count($workdays_arr);
+            $data['present_days_count'] = $this->dtrmodel->get_present_days($employee_id, $current_date);
+            $data['tardy_days_count'] = $this->dtrmodel->get_tardy_days($employee_id, $current_date);
+            $data['undertime_days_count'] = $this->dtrmodel->get_undertime_days($employee_id, $current_date);
+            $data['overtime_days_count'] = $this->dtrmodel->get_overtime_days($employee_id, $current_date);
+            $data['half_days_count'] = $this->dtrmodel->get_half_days($employee_id, $current_date);
+            
             $data['time_records'] = $this->dtrmodel->get_time_records($employee_id, $current_date);
             // print_r($data['time_records']);
 

@@ -211,7 +211,13 @@
                   <?php echo $time; ?>
                   <?php echo $cur_time; ?> -->
 
-                  <?php echo $full_name; ?>
+                  <?php 
+                    $time1 = new DateTime(date("H:i:s", strtotime('8:00')));
+                    $time2 = new DateTime(date("H:i:s", strtotime('17:10')));
+                    $interval = $time1->diff($time2); 
+                    echo $interval->format('%h');
+                    echo $interval->format('%i');
+                  ?>
                   
                   <!-- <div class='col-md-5'><?php echo '<img width="100%" height="auto" src="data:image/jpeg;base64,'.base64_encode($time_records[0]['image']).'"/>' ?></div> -->
                 </div>           
@@ -429,7 +435,7 @@
             var dataUrl = canvas.toDataURL();
             document.querySelector("#captured-image").setAttribute("src", dataUrl);
 
-            document.getElementById("imageDescription").innerHTML = "<?php echo $full_name; ?><br><b><?php echo rand(89, 99); ?>%</b> user identity.";
+            document.getElementById("imageDescription").innerHTML = "<?php echo $full_name; ?><br><b><?php echo rand(89, 99); ?>%</b> user identity";
             
             document.getElementById('video').style.display = 'none';
             document.getElementById('captureTimeInBtn').disabled = true;
