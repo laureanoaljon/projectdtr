@@ -88,11 +88,13 @@ class Main extends CI_Controller {
             $data['workdays_count'] = count($workdays_arr);
             $data['present_days_count'] = $this->dtrmodel->get_present_days($employee_id, $current_date);
             
-            if ($data['present_days_count'] == 0){
-                $data['absent_days_count'] = $data['workdays_count'];
-            } else {
-                $data['absent_days_count'] = $data['workdays_count'] - $data['present_days_count'];
-            }
+            // if ($data['present_days_count'] == 0){
+            //     $data['absent_days_count'] = $data['workdays_count'];
+            // } else {
+            //     $data['absent_days_count'] = $data['workdays_count'] - $data['present_days_count'];
+            // }
+
+            $data['absent_days_count'] = 0;
 
             $data['tardy_days_count'] = $this->dtrmodel->get_tardy_days($employee_id, $current_date);
             $data['undertime_days_count'] = $this->dtrmodel->get_undertime_days($employee_id, $current_date);
@@ -149,11 +151,13 @@ class Main extends CI_Controller {
         $data['workdays_count'] = count($workdays_arr);
         $data['present_days_count'] = $this->dtrmodel->get_present_days($employee_id, $current_date);
 
-        if ($data['present_days_count'] == 0){
-            $data['absent_days_count'] = $data['workdays_count'];
-        } else {
-            $data['absent_days_count'] = $data['workdays_count'] - $data['present_days_count'];
-        }
+        // if ($data['present_days_count'] == 0){
+        //     $data['absent_days_count'] = $data['workdays_count'];
+        // } else {
+        //     $data['absent_days_count'] = $data['workdays_count'] - $data['present_days_count'];
+        // }
+
+        $data['absent_days_count'] = 0;
 
         $data['tardy_days_count'] = $this->dtrmodel->get_tardy_days($employee_id, $current_date);
         $data['undertime_days_count'] = $this->dtrmodel->get_undertime_days($employee_id, $current_date);
