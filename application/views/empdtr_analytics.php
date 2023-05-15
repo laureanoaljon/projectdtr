@@ -48,8 +48,7 @@
                   <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
                   <?php if ($category != "employee"){?>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
-                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTRAnalytics/index" role="button">Employee DTR Analytics</a>
-                    <a class="w-100 mr-2 text-white text-left"  href="<?php echo base_url(); ?>EmployeeDTR/office_analytics" role="button">Office DTR Analytics</a>
+                    <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
                   <?php } ?>
@@ -83,12 +82,25 @@
 
                 <div class="col-md-12">
                   <div class="col-md-10 ml-3 mt-2">
-                    <h1 style="color: gray; font-size: 32px;">Office DTR Analytics</h1>
+                    <h1 style="color: gray; font-size: 32px;">Employee DTR Analytics</h1>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="col-md-12">
+
+                  <div class="row mt-5 ml-5">
+                        <select id="select_employee" name="" class="border rounded pass-label">
+                                <option value="Select">Select Employee</option>
+                                <?php
+                                    foreach ($employees_data as $row)
+                                    {
+                                            echo "<option value='".$row->db_id."'>".$row->s_name.", ".$row->f_name." -- ".$row->employee_id."</option>";
+                                    }
+                                ?>
+                        </select>    
+                    </div>
+
                     <!-- Variety Group -->
                     <div class="row mt-3 ml-0">
                         <div class="col-6">
@@ -127,7 +139,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-12 mt-3 px-4" id="testHtml">
+                <div class="col-md-12 mt-3 px-4" id="testHtml" style="display:none">
                     <div class="col-md-12 mt-3 ml-2">
                         <div class="card px-4">
                             <div class="card-body mt-3 mb-3">
@@ -156,13 +168,13 @@
                                     </div>
 
                                     <div class="col-sm">
-                                      <div class="card bg-light mb-3" style="max-width: 18rem;">
-                                          <!-- <div class="card-header">Header</div> -->
-                                          <div class="card-body text-center">
-                                              <h5 class="card-title">Absent</h5>
-                                              <p class="card-text" style="font-size: 40px;" id="absentDays"><?php echo $absent_days_count; ?></p>
-                                          </div>
-                                      </div>
+                                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                            <!-- <div class="card-header">Header</div> -->
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Absent</h5>
+                                                <p class="card-text" style="font-size: 40px;" id="absentDays"><?php echo $absent_days_count; ?></p>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-sm">
@@ -699,6 +711,19 @@
               });
             } 
           });
+
+
+          $('#select_employee').change(function() {
+            var selected_employee = $('#select_employee').val();
+
+            if(selected_employee == "Select"){
+                document.getElementById("testHtml").style.display = "none";
+            }
+            else{
+                document.getElementById("testHtml").style.display = "block";
+            }
+                
+        });
 
         });
     </script>
