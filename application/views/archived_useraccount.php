@@ -41,8 +41,9 @@
                   <?php if ($category != "employee"){?>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
                     <a class="w-100 mr-2 text-white text-left" href="#" role="button">Employee DTR Analytics</a>
+                    <a class="w-100 mr-2 text-white text-left"  href="<?php echo base_url(); ?>EmployeeDTR/office_analytics" role="button">Office DTR Analytics</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
-                    <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
+                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
                   <?php } ?>
                   <a class="w-100 mr-2 text-white text-left" href="#" role="button" id="changePasswordBtn">Change Password</a>
                   <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/logout" role="button">Logout</a>
@@ -235,6 +236,55 @@
         </div>
     </div>
 
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="timeInModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: transparent">
+            <h4 class="modal-title"><b>Change Password</b></h4>
+            <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="" class="" method="">
+              <div class="form-row px-3">
+                <div class="col-md-5 mb-3">
+                  <label for="title_of_study"><b>Curent Password</b></label>
+                </div>
+                <div class="col-md-7 mb-3">
+                  <input type="text" class="form-control" id="current_password" name="current_password" placeholder="" required="">
+                  <span id="error-current-password-modal"></span>
+                </div>
+
+                <div class="col-md-5 mb-3">
+                  <label for="study_description"><b>New Password</b></label>
+                </div>
+                <div class="col-md-7 mb-3">
+                  <input type="text" class="form-control" id="new_password" name="new_password" placeholder="" required="">
+                  <span id="error-new-password-modal"></span>
+                </div>
+
+                <div class="col-md-5 mb-3">
+                  <label for="study_description"><b>Confirm Password</b></label>
+                </div>
+                <div class="col-md-7 mb-3">
+                  <input type="text" class="form-control" id="confirm_password" name="confirm_password" placeholder="" required="">
+                  <span id="error-confirm-password-modal"></span>
+                </div>
+              </div>
+            </form>
+            <div class='col-md-12 text-center mt-3'>
+              <p id="messageChangePassword"></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="confirmChangePasswordBtn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 
     <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-3.6.0.min.js"></script>
@@ -244,6 +294,76 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>js/custom.js"></script>
     <script>
         var sidebarjs = new SidebarJS.SidebarElement();
+
+        $("#changePasswordBtn").click(function(){
+            $('#changePasswordModal').modal('show');
+          });
+
+          // Press enter, trigger submit button
+          $("#confirm_password").keypress(function(event) {
+              if (event.keyCode === 13) {
+                  $("#confirmChangePasswordBtn").click();
+              }
+          });
+
+          $("#confirmChangePasswordBtn").click(function(){
+            var flag = 0;
+            var current_password = $('#current_password').val();
+            var new_password = $('#new_password').val();
+            var confirm_password = $('#confirm_password').val();
+
+            if (current_password == '' || current_password == undefined) {
+              $('#current_password').css('border', '1px solid red');
+              // document.getElementById("new-title-err").innerHTML = "<span style='color: red;'><strong>Can't be blank!</strong></span>";
+              flag = 1;
+            }
+
+            if (new_password == '' || new_password == undefined) {
+              $('#new_password').css('border', '1px solid red');
+              // document.getElementById("new-title-err").innerHTML = "<span style='color: red;'><strong>Can't be blank!</strong></span>";
+              flag = 1;
+            }
+
+            if (confirm_password == '' || confirm_password == undefined) {
+              $('#confirm_password').css('border', '1px solid red');
+              // document.getElementById("new-title-err").innerHTML = "<span style='color: red;'><strong>Can't be blank!</strong></span>";
+              flag = 1;
+            }
+
+            if (flag == 0) {
+              $.ajax({
+              url: "<?php echo base_url(); ?>main/change_password",
+              method: 'POST',
+              dataType: "JSON",
+              data: {
+                current_password: current_password,
+                new_password: new_password, 
+                confirm_password: confirm_password,
+              },
+              success: function (response) {
+                console.log(response);
+
+                if (response['message'] == "Successfully change password."){
+                  document.getElementById("messageChangePassword").innerHTML = '<span style="color: blue;">' + response['message']+ '</span>';
+                  
+                  setTimeout(function() {
+                    $('#changePasswordModal').modal('toggle');
+                    window.location.href = '<?php echo base_url(); ?>main/index';
+                  }, 1500);
+                } else {
+                  document.getElementById("messageChangePassword").innerHTML = '<span style="color: red;">' + response['message'] + '</span>';
+
+                  // setTimeout(function() {
+                  //   window.location.reload();
+                  // }, 4000);
+                }
+              },
+              error: function (request, status, error) {
+                alert(request.responseText);
+              }
+              });
+            } 
+          });
 
 
         function getArchiveUserAccounts() {
