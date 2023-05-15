@@ -176,8 +176,6 @@ class DtrModel extends CI_Model
             $total_hours = $interval->format('%h');
             $total_minutes = $interval->format('%i');
 
-            // $total_hours = $rec[0]['am_time_out'] - $rec[0]['am_time_in'];
-
             $this->db->set('total_hours', $total_hours);
             $this->db->set('total_minutes', $total_minutes);
             $this->db->where('employee_db_id', $employee_db_id);
@@ -190,8 +188,18 @@ class DtrModel extends CI_Model
             $total_hours = $interval->format('%h') - 1;
             $total_minutes = $interval->format('%i');
 
-            // $total_hours = ($rec[0]['pm_time_in'] - $rec[0]['am_time_in']) - 1;
-
+            $this->db->set('total_hours', $total_hours);
+            $this->db->set('total_minutes', $total_minutes);
+            $this->db->where('employee_db_id', $employee_db_id);
+            $this->db->like('date', $current_date);
+            $this->db->update('time_records');
+        } else if (!empty($rec[0]['pm_time_in']) && !empty($rec[0]['pm_time_out']) && empty($rec[0]['am_time_in']) && empty($rec[0]['am_time_out'])){
+            $time1 = new DateTime(date("H:i:s", strtotime($rec[0]['pm_time_in'])));
+            $time2 = new DateTime(date("H:i:s", strtotime($rec[0]['pm_time_out'])));
+            $interval = $time1->diff($time2); 
+            $total_hours = $interval->format('%h');
+            $total_minutes = $interval->format('%i');
+           
             $this->db->set('total_hours', $total_hours);
             $this->db->set('total_minutes', $total_minutes);
             $this->db->where('employee_db_id', $employee_db_id);
@@ -214,7 +222,7 @@ class DtrModel extends CI_Model
         $this->db->from('time_records');
         $this->db->where('employee_db_id', $employee_db_id);
         $this->db->like('date', $current_date);
-        $this->db->where('total_hours >', 0);
+        // $this->db->where('total_hours >', 0);
 
         $query = $this->db->count_all_results();
         return $query;
@@ -255,13 +263,26 @@ class DtrModel extends CI_Model
         return $query;
     }
 
-    public function get_half_days($employee_db_id, $current_date){
+    public function get_am_half_days($employee_db_id, $current_date){
         $this->db->select('*');
         $this->db->from('time_records');
         $this->db->where('employee_db_id', $employee_db_id);
         $this->db->like('date', $current_date);
         $this->db->where('am_time_in !=', 'NULL');
         $this->db->where('am_time_out !=', 'NULL');
+        $this->db->where('total_hours <', 7);
+
+        $query = $this->db->count_all_results();
+        return $query;
+    }
+
+    public function get_pm_half_days($employee_db_id, $current_date){
+        $this->db->select('*');
+        $this->db->from('time_records');
+        $this->db->where('employee_db_id', $employee_db_id);
+        $this->db->like('date', $current_date);
+        $this->db->where('pm_time_in !=', 'NULL');
+        $this->db->where('pm_time_out !=', 'NULL');
         $this->db->where('total_hours <', 7);
 
         $query = $this->db->count_all_results();

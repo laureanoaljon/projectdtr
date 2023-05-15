@@ -373,6 +373,7 @@ $(document).ready(function () {
             }
         });
     });
+    
     $('a.download-chart').click(function () {
         var extractChart = this.parentElement.parentElement;
         $('div.scrollable-chart').css('height', 'auto');
