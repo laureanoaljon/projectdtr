@@ -20,8 +20,20 @@ class AccountManagementModel extends CI_Model{
         return $query->row();
     }
 
+    function getAccountDataRecoImages($emp_dbid){
+        
+        $this->db->select('*');
+        $this->db->where("emp_dbid", $emp_dbid);
+        
+        $query = $this->db->get('face_recognition_photos');
+        return $query->result();
+    }
 
-    function insertUserAccount($idnumber, $sname, $fname, $cat, $pw,$image_path){
+
+    function insertUserAccount($idnumber, $sname, $fname, $cat,$image_path){
+
+        $pw = $idnumber . "!" . $sname;
+
         $data = array(
                 'employee_Id' => $idnumber,
                 's_name' => $sname,
@@ -36,14 +48,28 @@ class AccountManagementModel extends CI_Model{
         return "New User Account created";
     }
 
+    function insertNewFaceData($idnumber, $image_path){
+
+        $data = array(
+                'emp_dbid' => $idnumber,
+                'image' => $image_path
+        );
+    
+        $this->db->insert('face_recognition_photos', $data);
+        return "Image added";
+    }
 
 
-    function editUserAccount($db_id, $idnumber, $sname, $fname, $cat){
+
+    function editUserAccount($db_id, $idnumber, $sname, $fname, $cat, $image_path){
        
         $this->db->set('employee_id', $idnumber);
         $this->db->set('s_name', $sname);
         $this->db->set('f_name', $fname);
         $this->db->set('category', $cat);
+        if($image_path != "")
+            $this->db->set('dp', $image_path);
+
         $this->db->where('db_id', $db_id);
         $this->db->update('employee'); // gives UPDATE `mytable` SET `field` = 'field+1' WHERE `id` = 2
 
@@ -88,6 +114,13 @@ class AccountManagementModel extends CI_Model{
        
 
         return "User Account deleted";
+
+    }
+
+    function deleteRecoImage($db_id){
+
+        $this->db->delete('face_recognition_photos', array('id' => $db_id));
+        return "Removed";
 
     }
 

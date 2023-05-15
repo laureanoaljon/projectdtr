@@ -57,6 +57,7 @@ $route['insert-timeindata']['post'] = 'employeedtr/insertTimeInData';
 $route['insert-timeoutdata']['post'] = 'employeedtr/insertTimeOutData';
 $route['get-empdtr']['post'] = 'employeedtr/getEmployeeDtr';
 $route['insert-newuserdata']['post'] = 'activeuseraccount/insertUserAccount';
+$route['insert-newfacedata']['post'] = 'activeuseraccount/insertNewFaceData';
 $route['get-activeaccounts']['post'] = 'activeuseraccount/getActiveUserAccounts';
 $route['get-accountdata']['post'] = 'activeuseraccount/getAccountData';
 $route['edit-userdata']['post'] = 'activeuseraccount/editUserAccount';
@@ -64,6 +65,8 @@ $route['archive-user']['post'] = 'activeuseraccount/archiveUserAccount';
 $route['revive-user']['post'] = 'archiveuseraccount/reviveUserAccount';
 $route['get-archiveaccounts']['post'] = 'archiveuseraccount/getArchiveUserAccounts';
 $route['delete-user']['post'] = 'archiveuseraccount/deleteUserAccount';
+$route['get-accountdata-images']['post'] = 'activeuseraccount/getAccountDataRecoImages';
+$route['delete-recogphoto']['post'] = 'activeuseraccount/deleteRecoImage';
 
 
 // $route['image-upload'] = 'ImageUpload';
