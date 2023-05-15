@@ -49,6 +49,7 @@
                   <?php if ($category != "employee"){?>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTRAnalytics/index" role="button">Employee DTR Analytics</a>
+                    <a class="w-100 mr-2 text-white text-left"  href="<?php echo base_url(); ?>EmployeeDTR/office_analytics" role="button">Office DTR Analytics</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
                   <?php } ?>
@@ -86,7 +87,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 px-4">
                   <div class="col-md-12">
                     <!-- Variety Group -->
                     <div class="row mt-3 ml-0">

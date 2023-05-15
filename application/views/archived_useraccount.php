@@ -31,7 +31,7 @@
     <!-- Navigation --->
     <div class="container-fluid">
         <div class="row">
-        <div id="sidebarView" sidebarjs>
+          <div id="sidebarView" sidebarjs>
               <div class="content">
                 <div id="sidebarToggle" class="text-white" sidebarjs-toggle><i class="bi bi-chevron-left"></i></div>
                 <nav class="navbar flex-column mt-2 text-left">
@@ -43,7 +43,7 @@
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTRAnalytics/index" role="button">Employee DTR Analytics</a>
                     <a class="w-100 mr-2 text-white text-left"  href="<?php echo base_url(); ?>EmployeeDTR/office_analytics" role="button">Office DTR Analytics</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
-                    <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
+                    <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
                   <?php } ?>
                   <a class="w-100 mr-2 text-white text-left" href="#" role="button" id="changePasswordBtn">Change Password</a>
                   <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/logout" role="button">Logout</a>
