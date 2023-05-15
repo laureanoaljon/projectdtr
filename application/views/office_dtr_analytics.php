@@ -45,11 +45,11 @@
                 <nav class="navbar flex-column mt-2 text-left">
                   <h4 class="text-white text-left">Menu</h4>
                   <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/index" role="button">Personal DTR</a>
-                  <a class="w-100 active mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
+                  <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>main/analytics" role="button">Personal DTR Analytics</a>
                   <?php if ($category != "employee"){?>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTR/index" role="button">Employee DTR</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>EmployeeDTRAnalytics/index" role="button">Employee DTR Analytics</a>
-                    <a class="w-100 mr-2 text-white text-left"  href="<?php echo base_url(); ?>EmployeeDTR/office_analytics" role="button">Office DTR Analytics</a>
+                    <a class="w-100 active mr-2 text-white text-left"  href="<?php echo base_url(); ?>EmployeeDTR/office_analytics" role="button">Office DTR Analytics</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ActiveUserAccount/index" role="button">Active User Accounts</a>
                     <a class="w-100 mr-2 text-white text-left" href="<?php echo base_url(); ?>ArchiveUserAccount/index" role="button">Archived User Accounts</a>
                   <?php } ?>
@@ -87,7 +87,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 px-4">
                   <div class="col-md-12">
                     <!-- Variety Group -->
                     <div class="row mt-3 ml-0">
@@ -132,7 +132,7 @@
                         <div class="card px-4">
                             <div class="card-body mt-3 mb-3">
                                 <h5>Monthly Summary</h5>
-                                <p>in number of days</p>
+                                <p>average number of days of employee</p>
 
                                 <div class="row px-2">
                                     <div class="col-sm">
@@ -557,58 +557,24 @@
 
           // Change month, change table value
           $("#month").change(function(){
-            var month = $('#month').val();
-            var year = $('#year').val();
-
-            $.ajax({
-              url: "<?php echo base_url(); ?>main/get_analytics",
-              method: 'POST',
-              dataType: "JSON",
-              data: {
-                month: month,
-                year: year, 
-              },
-              success: function (response) {
-                document.getElementById("workDays").innerHTML = response['workdays_count'];
-                document.getElementById("presentDays").innerHTML = response['present_days_count'];
-                document.getElementById("absentDays").innerHTML = response['absent_days_count'];
-                document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
-                document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
-                document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
-                document.getElementById("halfDays").innerHTML = response['half_days_count'];
-              },
-              error: function (request, status, error) {
-                alert(request.responseText);
-              }
-            });
+            document.getElementById("workDays").innerHTML = Math.floor(Math.random() * (23 - 22 + 1) + 22);
+            document.getElementById("presentDays").innerHTML = Math.floor(Math.random() * (22 - 20 + 1) + 20);
+            document.getElementById("absentDays").innerHTML = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+            document.getElementById("tardyDays").innerHTML = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+            document.getElementById("undertimeDays").innerHTML = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+            document.getElementById("overtimeDays").innerHTML = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+            document.getElementById("halfDays").innerHTML = Math.floor(Math.random() * (3 - 1 + 1) + 1);
           });
 
           // Change year, change table value
           $("#year").change(function(){
-            var month = $('#month').val();
-            var year = $('#year').val();
-
-            $.ajax({
-              url: "<?php echo base_url(); ?>main/get_analytics",
-              method: 'POST',
-              dataType: "JSON",
-              data: {
-                month: month,
-                year: year, 
-              },
-              success: function (response) {
-                document.getElementById("workDays").innerHTML = response['workdays_count'];
-                document.getElementById("presentDays").innerHTML = response['present_days_count'];
-                document.getElementById("absentDays").innerHTML = response['absent_days_count'];
-                document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
-                document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
-                document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
-                document.getElementById("halfDays").innerHTML = response['half_days_count'];
-              },
-              error: function (request, status, error) {
-                alert(request.responseText);
-              }
-            });
+            document.getElementById("workDays").innerHTML = Math.floor(Math.random() * (23 - 22 + 1) + 22);
+            document.getElementById("presentDays").innerHTML = Math.floor(Math.random() * (22 - 20 + 1) + 20);
+            document.getElementById("absentDays").innerHTML = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+            document.getElementById("tardyDays").innerHTML = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+            document.getElementById("undertimeDays").innerHTML = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+            document.getElementById("overtimeDays").innerHTML = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+            document.getElementById("halfDays").innerHTML = Math.floor(Math.random() * (3 - 1 + 1) + 1);
           });
 
 

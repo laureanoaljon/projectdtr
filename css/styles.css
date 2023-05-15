@@ -121,7 +121,7 @@ div#sidebarView div#sidebarToggle {
 }
 
 div#sidebarView nav.navbar a.w-100 {
-    padding: 5px 5px;
+    padding: 5px 0px;
     font-size: 1em !important;
     text-transform: uppercase;
     color: #fff !important;

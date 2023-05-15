@@ -23,8 +23,6 @@ class EmployeeDTRAnalytics extends CI_Controller{
     }
 
     public function index(){
-       
-         
         $this->analytics();
     }
 
