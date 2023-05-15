@@ -571,6 +571,7 @@
           $("#month").change(function(){
             var month = $('#month').val();
             var year = $('#year').val();
+            var emp_dbid = $("#select_employee").val();
 
             $.ajax({
               url: "<?php echo base_url(); ?>main/get_analytics",
@@ -578,16 +579,18 @@
               dataType: "JSON",
               data: {
                 month: month,
-                year: year, 
+                year: year,
+                emp_dbid : emp_dbid
               },
               success: function (response) {
-                document.getElementById("workDays").innerHTML = response['workdays_count'];
-                document.getElementById("presentDays").innerHTML = response['present_days_count'];
-                document.getElementById("absentDays").innerHTML = response['absent_days_count'];
-                document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
-                document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
-                document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
-                document.getElementById("halfDays").innerHTML = response['half_days_count'];
+                var random = Math.floor(Math.random() * 10);
+                  document.getElementById("workDays").innerHTML = response['workdays_count'] + random;
+                  document.getElementById("presentDays").innerHTML = response['present_days_count'] + random;
+                  document.getElementById("absentDays").innerHTML = response['absent_days_count'] +random;
+                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'] +random;
+                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'] +random;
+                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'] +random;
+                  document.getElementById("halfDays").innerHTML = response['half_days_count'] +random;
               },
               error: function (request, status, error) {
                 alert(request.responseText);
@@ -599,6 +602,8 @@
           $("#year").change(function(){
             var month = $('#month').val();
             var year = $('#year').val();
+            var emp_dbid = $("#select_employee").val();
+
 
             $.ajax({
               url: "<?php echo base_url(); ?>main/get_analytics",
@@ -607,15 +612,17 @@
               data: {
                 month: month,
                 year: year, 
+                emp_dbid:emp_dbid
               },
               success: function (response) {
-                document.getElementById("workDays").innerHTML = response['workdays_count'];
-                document.getElementById("presentDays").innerHTML = response['present_days_count'];
-                document.getElementById("absentDays").innerHTML = response['absent_days_count'];
-                document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
-                document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
-                document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
-                document.getElementById("halfDays").innerHTML = response['half_days_count'];
+                var random = Math.floor(Math.random() * 10);
+                  document.getElementById("workDays").innerHTML = response['workdays_count'] + random;
+                  document.getElementById("presentDays").innerHTML = response['present_days_count'] + random;
+                  document.getElementById("absentDays").innerHTML = response['absent_days_count'] +random;
+                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'] +random;
+                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'] +random;
+                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'] +random;
+                  document.getElementById("halfDays").innerHTML = response['half_days_count'] +random;
               },
               error: function (request, status, error) {
                 alert(request.responseText);
@@ -720,6 +727,33 @@
                 document.getElementById("testHtml").style.display = "none";
             }
             else{
+              var month = $('#month').val();
+              var year = $('#year').val();
+              var emp_dbid = $("#select_employee").val();
+
+              $.ajax({
+                url: "<?php echo base_url(); ?>main/get_analytics",
+                method: 'POST',
+                dataType: "JSON",
+                data: {
+                  month: month,
+                  year: year,
+                  emp_dbid : emp_dbid
+                },
+                success: function (response) {
+                  var random = Math.floor(Math.random() * 10);
+                  document.getElementById("workDays").innerHTML = response['workdays_count'] + random;
+                  document.getElementById("presentDays").innerHTML = response['present_days_count'] + random;
+                  document.getElementById("absentDays").innerHTML = response['absent_days_count'] +random;
+                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'] +random;
+                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'] +random;
+                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'] +random;
+                  document.getElementById("halfDays").innerHTML = response['half_days_count'] +random;
+                },
+                error: function (request, status, error) {
+                  alert(request.responseText);
+                }
+              });
                 document.getElementById("testHtml").style.display = "block";
             }
                 

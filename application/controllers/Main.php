@@ -117,6 +117,7 @@ class Main extends CI_Controller {
 
         $month = $this->input->post('month');
         $year = $this->input->post('year');
+        
 
         $data['year'] = $year;
         $data['month'] = $month;
@@ -127,6 +128,10 @@ class Main extends CI_Controller {
         $month = $data['month'];
 
         $employee_id = $_SESSION['user']['db_id'];
+        if($this->input->post('emp_dbid') != null){
+            $employee_id = $this->input->post('empdb_id');
+        }
+
         $current_date = date("Y-m", strtotime(''.$year.'-'.$month.''));
 
         $workdays_arr = array();
