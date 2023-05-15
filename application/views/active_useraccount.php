@@ -303,7 +303,7 @@
                                             echo "<td>" . $row->s_name . "</td>";
                                             echo "<td>" . $row->f_name . "</td>";
                                             echo "<td>" . $row->category . "</td>";
-                                            echo "<td><input class='mr-2' type='button' value='Edit' onclick='editaccount(" . $row->db_id . ")'><input type='button' value='Manage Face Recognition' onclick='manageFaceReco(" . $row->db_id . ")'></td>";
+                                            echo "<td><input class='mr-2' type='button' value='Edit' onclick='editaccount(" . $row->db_id . ")'><input type='button' value='Manage Face Recognition Model' onclick='manageFaceReco(" . $row->db_id . ")'></td>";
                                             echo "</tr>";
                                             $row_number++;
                                         }
@@ -544,7 +544,7 @@
                             table_content += '<td>' + array_response[i].s_name + '</td>'
                             table_content += '<td>' + array_response[i].f_name + '</td>'
                             table_content += '<td>' + array_response[i].category + '</td>'
-                            table_content += '<td><input class="mr-2" type="button" value="Edit" onclick="editaccount(' + array_response[i].db_id + ')"><input type="button" value="Manage Face Recognition" onclick="manageFaceReco(' + array_response[i].db_id + ')"></td>';
+                            table_content += '<td><input class="mr-2" type="button" value="Edit" onclick="editaccount(' + array_response[i].db_id + ')"><input type="button" value="Manage Face Recognition Model" onclick="manageFaceReco(' + array_response[i].db_id + ')"></td>';
                             table_content += '</tr>';
 
                         }
