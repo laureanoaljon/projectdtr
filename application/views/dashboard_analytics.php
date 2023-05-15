@@ -24,6 +24,8 @@
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" integrity="sha512-PIAUVU8u1vAd0Sz1sS1bFE5F1YjGqm/scQJ+VIUJL9kNa8jtAWFUDMu5vynXPDprRRBqHrE8KKEsjA7z22J1FA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" integrity="sha512-xnwMSDv7Nv5JmXb48gKD5ExVOnXAbNpBWVAXTo9BJWRJRygG8nwQI81o5bYe8myc9kiEF/qhMGPjkSsF06hyHA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/html2canvas.min.js"></script>
+
     <style>
       th {
         text-align: center;
@@ -91,18 +93,18 @@
                         <div class="col-6">
                             <!-- Month -->
                             <select id="month" name="month" class="border rounded pass-label" style="text-align-last: center; height: 40px; width: 150px;" data-live-search="true">
-                                <option value="January" <?php if ($month == '01'){  echo "selected"; } ?>>January</option>
-                                <option value="February" <?php if ($month == '02'){  echo "selected"; } ?>>February</option>
-                                <option value="March" <?php if ($month == '03'){  echo "selected"; } ?>>March</option>
-                                <option value="April" <?php if ($month == '04'){  echo "selected"; } ?>>April</option>
-                                <option value="May" <?php if ($month == '05'){  echo "selected"; } ?>>May</option>
-                                <option value="June" <?php if ($month == '06'){  echo "selected"; } ?>>June</option>
-                                <option value="July" <?php if ($month == '07'){  echo "selected"; } ?>>July</option>
-                                <option value="August" <?php if ($month == '08'){  echo "selected"; } ?>>August</option>
-                                <option value="September" <?php if ($month == '09'){  echo "selected"; } ?>>September</option>
-                                <option value="October" <?php if ($month == '10'){  echo "selected"; } ?>>October</option>
-                                <option value="November" <?php if ($month == '11'){  echo "selected"; } ?>>November</option>
-                                <option value="December" <?php if ($month == '12'){  echo "selected"; } ?>>December</option>
+                                <option value="01" <?php if ($month == '01'){  echo "selected"; } ?>>January</option>
+                                <option value="02" <?php if ($month == '02'){  echo "selected"; } ?>>February</option>
+                                <option value="03" <?php if ($month == '03'){  echo "selected"; } ?>>March</option>
+                                <option value="04" <?php if ($month == '04'){  echo "selected"; } ?>>April</option>
+                                <option value="05" <?php if ($month == '05'){  echo "selected"; } ?>>May</option>
+                                <option value="06" <?php if ($month == '06'){  echo "selected"; } ?>>June</option>
+                                <option value="07" <?php if ($month == '07'){  echo "selected"; } ?>>July</option>
+                                <option value="08" <?php if ($month == '08'){  echo "selected"; } ?>>August</option>
+                                <option value="09" <?php if ($month == '09'){  echo "selected"; } ?>>September</option>
+                                <option value="10" <?php if ($month == '10'){  echo "selected"; } ?>>October</option>
+                                <option value="11" <?php if ($month == '11'){  echo "selected"; } ?>>November</option>
+                                <option value="12" <?php if ($month == '12'){  echo "selected"; } ?>>December</option>
                             </select>
 
                             <!-- Year -->
@@ -117,16 +119,17 @@
                         </div>
 
                         <div class="col-6 text-right">
-                          <button class="btn btn-secondary" type="button" id="printAnalytics" data-type="" data-title="" data-toggle="modal" data-target="#targetModal">Print Analytics</button>
+                          <!-- <button class="btn btn-secondary" type="button" id="printAnalytics" data-type="" data-title="" data-toggle="modal" data-target="#targetModal">Print Analytics</button> -->
+                          <a class="btn btn-secondary text-white" role="button" id="printAnalytics" data-html2canvas-ignore="true">Print Analytics</a>
                         </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-3 px-4" id="testHtml">
                     <div class="col-md-12 mt-3 ml-2">
-                        <div class="card">
-                            <div class="card-body">
+                        <div class="card px-4">
+                            <div class="card-body mt-3 mb-3">
                                 <h5>Monthly Summary</h5>
                                 <p>in number of days</p>
 
@@ -156,7 +159,7 @@
                                             <!-- <div class="card-header">Header</div> -->
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Absent</h5>
-                                                <p class="card-text" style="font-size: 40px;" id="absentDays"><?php echo $workdays_count - $present_days_count; ?></p>
+                                                <p class="card-text" style="font-size: 40px;" id="absentDays"><?php echo $absent_days_count; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -207,11 +210,11 @@
                     </div>
 
                     <div class="col-md-12 mt-3 ml-2">
-                        <div class="card">
-                            <div class="card-body">
+                        <div class="card px-4">
+                            <div class="card-body mt-3 mb-3">
                                 <h5>Yearly Summary</h5>
 
-                                <div class="row px-2">
+                                <div class="row px-2 mt-3">
                                     <div class="col-lg">
                                         <div class="card bg-light mb-3" style="max-width: auto;">
                                             <!-- <div class="card-header">Header</div> -->
@@ -233,7 +236,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row px-2">
+                                <div class="row px-2 mt-3">
                                     <div class="col-lg">
                                         <div class="card bg-light mb-3" style="max-width: auto;">
                                             <!-- <div class="card-header">Header</div> -->
@@ -255,7 +258,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row px-2">
+                                <div class="row px-2 mt-3">
                                     <div class="col-lg">
                                         <div class="card bg-light mb-3" style="max-width: auto;">
                                             <!-- <div class="card-header">Header</div> -->
@@ -550,13 +553,80 @@
         var sidebarjs = new SidebarJS.SidebarElement();
 
         $(document).ready(function(){
+
+          // Change month, change table value
+          $("#month").change(function(){
+            var month = $('#month').val();
+            var year = $('#year').val();
+
+            $.ajax({
+              url: "<?php echo base_url(); ?>main/get_analytics",
+              method: 'POST',
+              dataType: "JSON",
+              data: {
+                month: month,
+                year: year, 
+              },
+              success: function (response) {
+                document.getElementById("workDays").innerHTML = response['workdays_count'];
+                document.getElementById("presentDays").innerHTML = response['present_days_count'];
+                document.getElementById("absentDays").innerHTML = response['absent_days_count'];
+                document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
+                document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
+                document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
+                document.getElementById("halfDays").innerHTML = response['half_days_count'];
+              },
+              error: function (request, status, error) {
+                alert(request.responseText);
+              }
+            });
+          });
+
+          // Change year, change table value
           $("#year").change(function(){
-            alert($('#year').val());
+            var month = $('#month').val();
+            var year = $('#year').val();
 
-            document.getElementById("workDays").innerHTML = "<?php echo rand(22, 230); ?>";
-            document.getElementById("presentDays").innerHTML = "<?php echo rand(18, 230); ?>";
-            document.getElementById("absentDays").innerHTML = "<?php echo rand(1, 50); ?>";
+            $.ajax({
+              url: "<?php echo base_url(); ?>main/get_analytics",
+              method: 'POST',
+              dataType: "JSON",
+              data: {
+                month: month,
+                year: year, 
+              },
+              success: function (response) {
+                document.getElementById("workDays").innerHTML = response['workdays_count'];
+                document.getElementById("presentDays").innerHTML = response['present_days_count'];
+                document.getElementById("absentDays").innerHTML = response['absent_days_count'];
+                document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
+                document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
+                document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
+                document.getElementById("halfDays").innerHTML = response['half_days_count'];
+              },
+              error: function (request, status, error) {
+                alert(request.responseText);
+              }
+            });
+          });
 
+
+           // Download result
+           $("#printAnalytics").click(function(){
+            var month = $('#month').val();
+            var year = $('#year').val();
+            var extractChart = document.getElementById("testHtml");
+
+            // alert(extractChart);
+            $('#testHtml').css('height', 'auto');
+            
+            var titleChart = month + "_" + year + ".png";
+            
+            html2canvas(extractChart).then(function (canvas) {
+                saveAs(canvas.toDataURL(), titleChart);
+            });
+
+            $('#testHtml').css('height', 'auto');
           });
 
           $("#changePasswordBtn").click(function(){
