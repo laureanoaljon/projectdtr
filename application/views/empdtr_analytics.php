@@ -584,14 +584,14 @@
                 emp_dbid : emp_dbid
               },
               success: function (response) {
-                var random = Math.floor(Math.random() * 10);
-                  document.getElementById("workDays").innerHTML = response['workdays_count'] + random;
-                  document.getElementById("presentDays").innerHTML = response['present_days_count'] + random;
-                  document.getElementById("absentDays").innerHTML = response['absent_days_count'] +random;
-                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'] +random;
-                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'] +random;
-                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'] +random;
-                  document.getElementById("halfDays").innerHTML = response['half_days_count'] +random;
+                // var random = Math.floor(Math.random() * 10);
+                  document.getElementById("workDays").innerHTML = response['workdays_count'];
+                  document.getElementById("presentDays").innerHTML = response['present_days_count'];
+                  document.getElementById("absentDays").innerHTML = response['absent_days_count'];
+                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
+                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
+                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
+                  document.getElementById("halfDays").innerHTML = response['half_days_count'];
               },
               error: function (request, status, error) {
                 alert(request.responseText);
@@ -616,14 +616,14 @@
                 emp_dbid:emp_dbid
               },
               success: function (response) {
-                var random = Math.floor(Math.random() * 10);
-                  document.getElementById("workDays").innerHTML = response['workdays_count'] + random;
-                  document.getElementById("presentDays").innerHTML = response['present_days_count'] + random;
-                  document.getElementById("absentDays").innerHTML = response['absent_days_count'] +random;
-                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'] +random;
-                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'] +random;
-                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'] +random;
-                  document.getElementById("halfDays").innerHTML = response['half_days_count'] +random;
+                //var random = Math.floor(Math.random() * 10);
+                  document.getElementById("workDays").innerHTML = response['workdays_count'];
+                  document.getElementById("presentDays").innerHTML = response['present_days_count'];
+                  document.getElementById("absentDays").innerHTML = response['absent_days_count'];
+                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
+                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
+                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
+                  document.getElementById("halfDays").innerHTML = response['half_days_count'];
               },
               error: function (request, status, error) {
                 alert(request.responseText);
@@ -742,14 +742,14 @@
                   emp_dbid : emp_dbid
                 },
                 success: function (response) {
-                  var random = Math.floor(Math.random() * 10);
-                  document.getElementById("workDays").innerHTML = response['workdays_count'] + random;
-                  document.getElementById("presentDays").innerHTML = response['present_days_count'] + random;
-                  document.getElementById("absentDays").innerHTML = response['absent_days_count'] +random;
-                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'] +random;
-                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'] +random;
-                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'] +random;
-                  document.getElementById("halfDays").innerHTML = response['half_days_count'] +random;
+                  //var random = Math.floor(Math.random() * 10);
+                  document.getElementById("workDays").innerHTML = response['workdays_count'];
+                  document.getElementById("presentDays").innerHTML = response['present_days_count'];
+                  document.getElementById("absentDays").innerHTML = response['absent_days_count'];
+                  document.getElementById("tardyDays").innerHTML = response['tardy_days_count'];
+                  document.getElementById("undertimeDays").innerHTML = response['undertime_days_count'];
+                  document.getElementById("overtimeDays").innerHTML = response['overtime_days_count'];
+                  document.getElementById("halfDays").innerHTML = response['half_days_count'];
                 },
                 error: function (request, status, error) {
                   alert(request.responseText);
